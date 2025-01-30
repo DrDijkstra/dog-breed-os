@@ -12,7 +12,7 @@ enum RequestRouter: URLRequestConvertible {
     case breedList
     case randomPhoto(request: ApiRandomBreedImageRequest)
     
-    static var baseUrl: URL = URL(string: "https://your-api-base-url.com")!
+    static var baseUrl: URL = URL(string: "")!
     
     var method: HTTPMethod {
         switch self {

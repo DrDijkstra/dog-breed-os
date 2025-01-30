@@ -9,15 +9,15 @@
 import Foundation
 import Alamofire
 
-protocol ApiProtocol {
+protocol ApiService {
     func getBreedList() async throws -> ApiBreedData
     func getRandomBreedPhoto(request: ApiRandomBreedImageRequest) async throws -> ApiRandomBreedImageResponse
 }
 
-class ApiProtocolImpl: ApiProtocol {
+class ApiServiceImpl: ApiService {
     
     private let baseUrl: String
-    private let session: Session
+    let session: Session
 
     init(baseUrl: String, timeoutInterval: TimeInterval = 40) {
         self.baseUrl = baseUrl
