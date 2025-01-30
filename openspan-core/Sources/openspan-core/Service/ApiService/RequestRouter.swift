@@ -8,12 +8,11 @@
 import Foundation
 import Alamofire
 
-
-enum RequestRouter : URLRequestConvertible, URLConvertible{
+enum RequestRouter: URLRequestConvertible {
     case breedList
-    case randomPhoto(breed: String)
+    case randomPhoto(request: ApiRandomBreedImageRequest)
     
-    static var baseUrl = ""
+    static var baseUrl: URL = URL(string: "https://your-api-base-url.com")!
     
     var method: HTTPMethod {
         switch self {
@@ -24,13 +23,16 @@ enum RequestRouter : URLRequestConvertible, URLConvertible{
     
     var path: String {
         switch self {
-        case .breedList, .randomPhoto:
+        case .breedList:
             return ApiUrl.breedList.path
+        case .randomPhoto(let request):
+            return ApiUrl.randomPhoto(breed: request.breed).path
         }
     }
     
     func asURLRequest() throws -> URLRequest {
-        var urlRequest = URLRequest(url: try getFullUrl())
+        let url = try getFullUrl()
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         
         switch self {
@@ -40,12 +42,7 @@ enum RequestRouter : URLRequestConvertible, URLConvertible{
         return urlRequest
     }
     
-    public func getFullUrl()throws -> URL{
-        return try RequestRouter.baseUrl.asURL().appendingPathComponent(path)
+    func getFullUrl() throws -> URL {
+        return RequestRouter.baseUrl.appendingPathComponent(path)
     }
-    
-    func asURL() throws -> URL {
-        return URL(string: path)!
-    }
-
 }

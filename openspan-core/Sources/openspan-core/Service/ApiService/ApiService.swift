@@ -10,10 +10,12 @@ import Foundation
 import Alamofire
 
 protocol ApiProtocol {
-    func getBreedList(gwCallback: @escaping (ApiGateWayCallResult<ApiBreedData>) -> Void)
+    func getBreedList() async throws -> ApiBreedData
+    func getRandomBreedPhoto(request: ApiRandomBreedImageRequest) async throws -> ApiRandomBreedImageResponse
 }
 
 class ApiProtocolImpl: ApiProtocol {
+    
     private let baseUrl: String
     private let session: Session
 
@@ -27,38 +29,32 @@ class ApiProtocolImpl: ApiProtocol {
         self.session = Session(configuration: configuration, interceptor: requestInterceptor)
         
         // Set base URL for requests
-        RequestRouter.baseUrl = baseUrl
+        RequestRouter.baseUrl = URL(string: baseUrl)!
     }
 
-    func getBreedList(gwCallback: @escaping (ApiGateWayCallResult<ApiBreedData>) -> Void) {
-        executeRequest(RequestRouter.breedList, gwCallback: gwCallback)
+    func getBreedList() async throws -> ApiBreedData {
+        return try await executeRequest(RequestRouter.breedList)
+    }
+    
+    func getRandomBreedPhoto(request: ApiRandomBreedImageRequest) async throws -> ApiRandomBreedImageResponse {
+        return try await executeRequest(RequestRouter.randomPhoto(request: request))
     }
 
-    private func executeRequest<T: Decodable>(
-        _ urlRequest: URLRequestConvertible,
-        gwCallback: @escaping (ApiGateWayCallResult<T>) -> Void
-    ) {
-        session.request(urlRequest).responseData { [weak self] response in
-            guard let self = self else { return }
-
-            switch response.result {
-            case .success(let data):
-                self.printPrettyJSON(from: data, isSuccess: true)
-                do {
-                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                    gwCallback(.success(decodedResponse))
-                } catch {
-                    print("JSON Decoding Error: \(error)")
-                    gwCallback(.failure(error))
-                }
-            case .failure(let error):
-                if let data = response.data {
-                    self.printPrettyJSON(from: data, isSuccess: false)
-                }
-                print("Request Failed: \(error)")
-                gwCallback(.failure(error))
-            }
+    private func executeRequest<T: Decodable>(_ urlRequest: URLRequestConvertible) async throws -> T {
+        let dataTask = session.request(urlRequest).serializingDecodable(T.self)
+        let response = await dataTask.response
+        
+        // Print the response for debugging
+        if let data = response.data {
+            printPrettyJSON(from: data, isSuccess: response.error == nil)
         }
+        
+        if let error = response.error {
+            print("Request Failed: \(error)")
+            throw error
+        }
+        
+        return response.value!
     }
 
     private func printPrettyJSON(from data: Data, isSuccess: Bool) {
