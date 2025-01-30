@@ -59,9 +59,9 @@ final class ApiServiceTests: XCTestCase {
         
         // Validate the response
         XCTAssertEqual(breedData.status, "success")
-        XCTAssertEqual(breedData.message.count, 2)
-        XCTAssertTrue(breedData.message.keys.contains("breed1"))
-        XCTAssertTrue(breedData.message.keys.contains("breed2"))
+        XCTAssertEqual(breedData.message!.count, 2)
+        XCTAssertTrue(breedData.message!.keys.contains("breed1"))
+        XCTAssertTrue(breedData.message!.keys.contains("breed2"))
     }
 
     func testGetRandomBreedPhoto_Success() async throws {

@@ -20,8 +20,10 @@ class BreedServiceImpl: BreedService {
     
     func getBreedList() async throws -> [BreedInfo] {
         let breedApiResponse = try await apiService.getBreedList()
-        return breedApiResponse.message.map { BreedInfo(name: $0.key, subbreeeds: $0.value) }
+        guard let message = breedApiResponse.message else { return [] } // Handle nil case
+        return message.map { BreedInfo(name: $0.key, subBreeds: $0.value) }
     }
+
     
     func getRandomBreedPhoto(request: BreedImageInfoRequest) async throws -> BreedImageInfoResponse {
         guard let breedName = request.breed else {
