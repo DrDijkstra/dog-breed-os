@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6AACE2862D4B0F06007913B8 /* openspan-core in Frameworks */ = {isa = PBXBuildFile; productRef = 6AACE2852D4B0F06007913B8 /* openspan-core */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6ACEBD502D4B0D3B00B8FA56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6ACEBD372D4B0D3800B8FA56 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6ACEBD3E2D4B0D3900B8FA56;
+			remoteInfo = "dog-breed-os";
+		};
+		6ACEBD5A2D4B0D3B00B8FA56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6ACEBD372D4B0D3800B8FA56 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6ACEBD3E2D4B0D3900B8FA56;
+			remoteInfo = "dog-breed-os";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6ACEBD3F2D4B0D3900B8FA56 /* dog-breed-os.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dog-breed-os.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6ACEBD4F2D4B0D3B00B8FA56 /* dog-breed-osTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "dog-breed-osTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6ACEBD592D4B0D3B00B8FA56 /* dog-breed-osUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "dog-breed-osUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6ACEBD412D4B0D3900B8FA56 /* dog-breed-os */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "dog-breed-os";
+			sourceTree = "<group>";
+		};
+		6ACEBD522D4B0D3B00B8FA56 /* dog-breed-osTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "dog-breed-osTests";
+			sourceTree = "<group>";
+		};
+		6ACEBD5C2D4B0D3B00B8FA56 /* dog-breed-osUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "dog-breed-osUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6ACEBD3C2D4B0D3900B8FA56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AACE2862D4B0F06007913B8 /* openspan-core in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6ACEBD4C2D4B0D3B00B8FA56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6ACEBD562D4B0D3B00B8FA56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6ACEBD362D4B0D3800B8FA56 = {
+			isa = PBXGroup;
+			children = (
+				6ACEBD412D4B0D3900B8FA56 /* dog-breed-os */,
+				6ACEBD522D4B0D3B00B8FA56 /* dog-breed-osTests */,
+				6ACEBD5C2D4B0D3B00B8FA56 /* dog-breed-osUITests */,
+				6ACEBD402D4B0D3900B8FA56 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6ACEBD402D4B0D3900B8FA56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6ACEBD3F2D4B0D3900B8FA56 /* dog-breed-os.app */,
+				6ACEBD4F2D4B0D3B00B8FA56 /* dog-breed-osTests.xctest */,
+				6ACEBD592D4B0D3B00B8FA56 /* dog-breed-osUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6ACEBD3E2D4B0D3900B8FA56 /* dog-breed-os */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6ACEBD632D4B0D3B00B8FA56 /* Build configuration list for PBXNativeTarget "dog-breed-os" */;
+			buildPhases = (
+				6ACEBD3B2D4B0D3900B8FA56 /* Sources */,
+				6ACEBD3C2D4B0D3900B8FA56 /* Frameworks */,
+				6ACEBD3D2D4B0D3900B8FA56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6ACEBD412D4B0D3900B8FA56 /* dog-breed-os */,
+			);
+			name = "dog-breed-os";
+			packageProductDependencies = (
+				6AACE2852D4B0F06007913B8 /* openspan-core */,
+			);
+			productName = "dog-breed-os";
+			productReference = 6ACEBD3F2D4B0D3900B8FA56 /* dog-breed-os.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6ACEBD4E2D4B0D3B00B8FA56 /* dog-breed-osTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6ACEBD662D4B0D3B00B8FA56 /* Build configuration list for PBXNativeTarget "dog-breed-osTests" */;
+			buildPhases = (
+				6ACEBD4B2D4B0D3B00B8FA56 /* Sources */,
+				6ACEBD4C2D4B0D3B00B8FA56 /* Frameworks */,
+				6ACEBD4D2D4B0D3B00B8FA56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6ACEBD512D4B0D3B00B8FA56 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6ACEBD522D4B0D3B00B8FA56 /* dog-breed-osTests */,
+			);
+			name = "dog-breed-osTests";
+			packageProductDependencies = (
+			);
+			productName = "dog-breed-osTests";
+			productReference = 6ACEBD4F2D4B0D3B00B8FA56 /* dog-breed-osTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6ACEBD582D4B0D3B00B8FA56 /* dog-breed-osUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6ACEBD692D4B0D3B00B8FA56 /* Build configuration list for PBXNativeTarget "dog-breed-osUITests" */;
+			buildPhases = (
+				6ACEBD552D4B0D3B00B8FA56 /* Sources */,
+				6ACEBD562D4B0D3B00B8FA56 /* Frameworks */,
+				6ACEBD572D4B0D3B00B8FA56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6ACEBD5B2D4B0D3B00B8FA56 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6ACEBD5C2D4B0D3B00B8FA56 /* dog-breed-osUITests */,
+			);
+			name = "dog-breed-osUITests";
+			packageProductDependencies = (
+			);
+			productName = "dog-breed-osUITests";
+			productReference = 6ACEBD592D4B0D3B00B8FA56 /* dog-breed-osUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6ACEBD372D4B0D3800B8FA56 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					6ACEBD3E2D4B0D3900B8FA56 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					6ACEBD4E2D4B0D3B00B8FA56 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = 6ACEBD3E2D4B0D3900B8FA56;
+					};
+					6ACEBD582D4B0D3B00B8FA56 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = 6ACEBD3E2D4B0D3900B8FA56;
+					};
+				};
+			};
+			buildConfigurationList = 6ACEBD3A2D4B0D3800B8FA56 /* Build configuration list for PBXProject "dog-breed-os" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6ACEBD362D4B0D3800B8FA56;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6AACE2842D4B0F06007913B8 /* XCLocalSwiftPackageReference "../openspan-core" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6ACEBD402D4B0D3900B8FA56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6ACEBD3E2D4B0D3900B8FA56 /* dog-breed-os */,
+				6ACEBD4E2D4B0D3B00B8FA56 /* dog-breed-osTests */,
+				6ACEBD582D4B0D3B00B8FA56 /* dog-breed-osUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6ACEBD3D2D4B0D3900B8FA56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6ACEBD4D2D4B0D3B00B8FA56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6ACEBD572D4B0D3B00B8FA56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6ACEBD3B2D4B0D3900B8FA56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6ACEBD4B2D4B0D3B00B8FA56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6ACEBD552D4B0D3B00B8FA56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6ACEBD512D4B0D3B00B8FA56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6ACEBD3E2D4B0D3900B8FA56 /* dog-breed-os */;
+			targetProxy = 6ACEBD502D4B0D3B00B8FA56 /* PBXContainerItemProxy */;
+		};
+		6ACEBD5B2D4B0D3B00B8FA56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6ACEBD3E2D4B0D3900B8FA56 /* dog-breed-os */;
+			targetProxy = 6ACEBD5A2D4B0D3B00B8FA56 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6ACEBD612D4B0D3B00B8FA56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6ACEBD622D4B0D3B00B8FA56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6ACEBD642D4B0D3B00B8FA56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"dog-breed-os/Preview Content\"";
+				DEVELOPMENT_TEAM = 267PCB3VPV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sanjay.dog-breed-os";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6ACEBD652D4B0D3B00B8FA56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"dog-breed-os/Preview Content\"";
+				DEVELOPMENT_TEAM = 267PCB3VPV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sanjay.dog-breed-os";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6ACEBD672D4B0D3B00B8FA56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 267PCB3VPV;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sanjay.dog-breed-osTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dog-breed-os.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dog-breed-os";
+			};
+			name = Debug;
+		};
+		6ACEBD682D4B0D3B00B8FA56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 267PCB3VPV;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sanjay.dog-breed-osTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dog-breed-os.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dog-breed-os";
+			};
+			name = Release;
+		};
+		6ACEBD6A2D4B0D3B00B8FA56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 267PCB3VPV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sanjay.dog-breed-osUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "dog-breed-os";
+			};
+			name = Debug;
+		};
+		6ACEBD6B2D4B0D3B00B8FA56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 267PCB3VPV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sanjay.dog-breed-osUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "dog-breed-os";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6ACEBD3A2D4B0D3800B8FA56 /* Build configuration list for PBXProject "dog-breed-os" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ACEBD612D4B0D3B00B8FA56 /* Debug */,
+				6ACEBD622D4B0D3B00B8FA56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6ACEBD632D4B0D3B00B8FA56 /* Build configuration list for PBXNativeTarget "dog-breed-os" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ACEBD642D4B0D3B00B8FA56 /* Debug */,
+				6ACEBD652D4B0D3B00B8FA56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6ACEBD662D4B0D3B00B8FA56 /* Build configuration list for PBXNativeTarget "dog-breed-osTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ACEBD672D4B0D3B00B8FA56 /* Debug */,
+				6ACEBD682D4B0D3B00B8FA56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6ACEBD692D4B0D3B00B8FA56 /* Build configuration list for PBXNativeTarget "dog-breed-osUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6ACEBD6A2D4B0D3B00B8FA56 /* Debug */,
+				6ACEBD6B2D4B0D3B00B8FA56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		6AACE2842D4B0F06007913B8 /* XCLocalSwiftPackageReference "../openspan-core" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../openspan-core";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AACE2852D4B0F06007913B8 /* openspan-core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "openspan-core";
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6ACEBD372D4B0D3800B8FA56 /* Project object */;
+}
