@@ -5,14 +5,6 @@
 //  Created by Sanjay Dey on 2025-01-29.
 //
 
-
-//
-//  BreedServiceTests.swift
-//  openspan-core
-//
-//  Created by Sanjay Dey on 2025-01-29.
-//
-
 import XCTest
 @testable import openspan_core
 
