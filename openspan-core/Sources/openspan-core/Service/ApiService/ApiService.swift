@@ -17,7 +17,7 @@ protocol ApiService {
 class ApiServiceImpl: ApiService {
     
     private let baseUrl: String
-    let session: Session
+    var session: Session
 
     init(baseUrl: String, timeoutInterval: TimeInterval = 40) {
         self.baseUrl = baseUrl
@@ -29,7 +29,7 @@ class ApiServiceImpl: ApiService {
         self.session = Session(configuration: configuration, interceptor: requestInterceptor)
         
         // Set base URL for requests
-        RequestRouter.baseUrl = URL(string: baseUrl)!
+        RequestRouter.baseUrl = baseUrl
     }
 
     func getBreedList() async throws -> ApiBreedData {

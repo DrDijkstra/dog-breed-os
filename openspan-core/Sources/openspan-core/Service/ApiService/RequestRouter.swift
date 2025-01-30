@@ -12,7 +12,7 @@ enum RequestRouter: URLRequestConvertible {
     case breedList
     case randomPhoto(request: ApiRandomBreedImageRequest)
     
-    static var baseUrl: URL = URL(string: "")!
+    static var baseUrl: String = ""
     
     var method: HTTPMethod {
         switch self {
@@ -43,6 +43,10 @@ enum RequestRouter: URLRequestConvertible {
     }
     
     func getFullUrl() throws -> URL {
-        return RequestRouter.baseUrl.appendingPathComponent(path)
+        return try RequestRouter.baseUrl.asURL().appendingPathComponent(path)
+    }
+    
+    func asURL() throws -> URL {
+        return URL(string: path)!
     }
 }
