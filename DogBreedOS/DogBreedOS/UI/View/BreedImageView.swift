@@ -8,15 +8,15 @@
 import SwiftUI
 import OpenspanCore
 
-import SwiftUI
-import OpenspanCore
-
 struct BreedImageView: View {
     let breedImage: BreedImage
     let imageWidth: CGFloat
     
     @State private var isShimmering = false
     @State private var imageHeight: CGFloat = 0 // Initial height is 0 to trigger animation
+    
+    // Access the current color scheme
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack {
@@ -57,9 +57,10 @@ struct BreedImageView: View {
                 .lineLimit(1)
                 .frame(maxWidth: imageWidth, alignment: .center)
                 .padding(.top, 4)
+                .foregroundColor(colorScheme == .dark ? .white : .black) // Adjust text color for dark mode
         }
         .padding() // Add padding inside the card
-        .background(Color.white) // Set card background color
+        .background(colorScheme == .dark ? Color(.systemGray5) : Color.white) // Use a dark gray for dark mode
         .cornerRadius(12) // Rounded corners for the card
         .shadow(radius: 5) // Add a shadow for a card-like effect
         .frame(width: imageWidth) // Constrain the card width
