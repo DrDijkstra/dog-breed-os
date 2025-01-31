@@ -11,7 +11,7 @@ import OpenspanCore
 struct DogBreedsView: View {
     
     // MARK: - ViewModel
-    @StateObject private var viewModel = DogBreedsViewModel()
+    @StateObject var viewModel : DogBreedsViewModel
     
     // MARK: - Body
     var body: some View {
@@ -39,5 +39,6 @@ struct DogBreedsView: View {
 }
 
 #Preview {
-    DogBreedsView()
+    let viewModel = AppContainer.shared.resolve(DogBreedsViewModel.self)
+    DogBreedsView(viewModel: viewModel)
 }

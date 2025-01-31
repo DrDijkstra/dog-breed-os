@@ -12,6 +12,8 @@ import OpenspanCore
 @main
 struct DogBreedOSApp: App {
     
+    let container : AppContainer = AppContainer.shared
+    
     init () {
         if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
            let dict = NSDictionary(contentsOfFile: path) as? [String: Any] {
@@ -29,8 +31,8 @@ struct DogBreedOSApp: App {
     }
     
     var body: some Scene {
-        WindowGroup {           
-            DogBreedsView()
+        WindowGroup {
+            DogBreedsView(viewModel: container.resolve(DogBreedsViewModel.self))
         }
     }
 }
