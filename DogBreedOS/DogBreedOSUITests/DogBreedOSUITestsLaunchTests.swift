@@ -1,13 +1,13 @@
 //
-//  dog_breed_osUITestsLaunchTests.swift
-//  dog-breed-osUITests
+//  DogBreedOSUITestsLaunchTests.swift
+//  DogBreedOSUITests
 //
-//  Created by Sanjay Dey on 2025-01-29.
+//  Created by Sanjay Dey on 2025-01-30.
 //
 
 import XCTest
 
-final class dog_breed_osUITestsLaunchTests: XCTestCase {
+final class DogBreedOSUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

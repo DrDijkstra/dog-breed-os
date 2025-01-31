@@ -1,0 +1,8 @@
+//
+//  dev.xcconfig
+//  DogBreedOS
+//
+//  Created by Sanjay Dey on 2025-01-30.
+//
+
+BASE_URL = https:/$()/dog.ceo/api/

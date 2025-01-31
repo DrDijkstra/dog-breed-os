@@ -1,14 +1,14 @@
 //
-//  dog_breed_osTests.swift
-//  dog-breed-osTests
+//  DogBreedOSTests.swift
+//  DogBreedOSTests
 //
-//  Created by Sanjay Dey on 2025-01-29.
+//  Created by Sanjay Dey on 2025-01-30.
 //
 
 import Testing
-@testable import dog_breed_os
+@testable import DogBreedOS
 
-struct dog_breed_osTests {
+struct DogBreedOSTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

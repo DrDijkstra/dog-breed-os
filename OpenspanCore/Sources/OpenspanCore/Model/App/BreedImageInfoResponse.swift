@@ -7,9 +7,9 @@
 
 public class BreedImageInfoResponse : Equatable {
     
-    var imageUrl: String?
+    public var imageUrl: String?
     
-    init(imageUrl: String? = nil) {
+    public init(imageUrl: String? = nil) {
         self.imageUrl = imageUrl
     }
     

@@ -6,7 +6,7 @@
 //
 
 public class OpenSpanCore {
-    static let shared = OpenSpanCore()
+    public static let shared = OpenSpanCore()
     
     public var openSpanCoreService: OpenSpanCoreService?
      
