@@ -44,7 +44,7 @@ struct WaterfallGrid: View {
                 }
             }
         }
-        .padding(.horizontal, 16) // Padding around the grid
+        .padding(.horizontal, 4)
     }
     
     // Calculate the width of each image based on screen width
