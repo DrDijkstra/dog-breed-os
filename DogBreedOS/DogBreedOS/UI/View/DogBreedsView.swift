@@ -11,27 +11,25 @@ import OpenspanCore
 struct DogBreedsView: View {
     
     // MARK: - ViewModel
-    @StateObject var viewModel : DogBreedsViewModel
+    @StateObject var viewModel: DogBreedsViewModel
     
     // MARK: - Body
     var body: some View {
         NavigationView {
             ScrollView {
-                WaterfallGrid(breedImages: viewModel.breedImagesList)
-                    .padding(16)
-            }.refreshable {
+                if viewModel.breedImagesList.isEmpty {
+                    ErrorView(message: "Failed to load images or no connection. Please try again later.")
+                } else {
+                    WaterfallGrid(breedImages: viewModel.breedImagesList)
+                        .padding(16)
+                }
+            }
+            .refreshable {
                 await viewModel.fetchAllBreedsAndImages()
             }
             .navigationTitle("Dog Breeds")
             .toolbar {
-                Button(action: {
-                    Task {
-                        await viewModel.clearCacheAndReload()
-                    }
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .font(.headline)
-                }
+                CacheClearButton(viewModel: viewModel)
             }
             .task {
                 await viewModel.fetchAllBreedsAndImages()

@@ -42,6 +42,7 @@ class DogBreedsViewModel: ObservableObject {
 
     func fetchAllBreedsAndImages() async {
         DispatchQueue.main.async {
+            self.breedImagesList.removeAll()
             self.isLoading = true
             self.errorMessage = nil
         }
@@ -102,11 +103,12 @@ class DogBreedsViewModel: ObservableObject {
             }
             
         } catch {
-            errorMessage = "Failed to fetch data: \(error.localizedDescription)"
-            isLoading = false
+            DispatchQueue.main.async {
+                self.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
+                self.isLoading = false
+            }
         }
     }
-
 
     @MainActor func clearCacheAndReload() async {
         breedImagesList.removeAll()
