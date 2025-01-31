@@ -19,7 +19,7 @@ final class OpenSpanCoreTests: XCTestCase {
         openSpanCore = OpenSpanCore.shared
         
         // Initialize the SDK with a valid baseUrl (e.g., a test API endpoint)
-        let testBaseUrl = "https://dog.ceo/api/" // Replace with a valid test API URL
+        let testBaseUrl = "https://dog.ceo/api/"
         openSpanCore.initializeSDK(baseUrl: testBaseUrl)
     }
     
@@ -61,7 +61,7 @@ final class OpenSpanCoreTests: XCTestCase {
     // Test getRandomBreedPhoto() through OpenSpanCore
     func testGetRandomBreedPhoto() async {
         // Arrange
-        let request = BreedImageInfoRequest(breed: "redbone") // Replace with a valid breed name
+        let request = BreedImageInfoRequest(breed: "redbone")
         
         do {
             // Act
