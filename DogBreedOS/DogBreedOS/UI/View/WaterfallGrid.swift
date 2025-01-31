@@ -32,6 +32,7 @@ struct WaterfallGrid: View {
             LazyVStack(spacing: 16) {
                 ForEach(splitArray[0]) { breedImage in
                     BreedImageView(breedImage: breedImage, imageWidth: calculateImageWidth())
+                        .transition(.asymmetric(insertion: .scale, removal: .opacity)) // Added transition for smooth appearance
                 }
             }
             
@@ -39,28 +40,24 @@ struct WaterfallGrid: View {
             LazyVStack(spacing: 16) {
                 ForEach(splitArray[1]) { breedImage in
                     BreedImageView(breedImage: breedImage, imageWidth: calculateImageWidth())
+                        .transition(.asymmetric(insertion: .scale, removal: .opacity)) // Added transition for smooth appearance
                 }
             }
         }
+        .padding(.horizontal, 16) // Padding around the grid
     }
     
     // Calculate the width of each image based on screen width
-   private func calculateImageWidth() -> CGFloat {
-       let screenWidth = UIScreen.main.bounds.width
-       return (screenWidth - 96) / 2 // Subtracting padding and spacing
-   }
+    private func calculateImageWidth() -> CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        return (screenWidth - 128) / 2 // Subtracting padding and spacing for two columns
+    }
 }
 
 #Preview {
-    let images = [BreedImage(
-               id: "1",
-               name: "Golden Retriever",
-               image: UIImage(systemName: "placeholder_image")!
-           ),
-           BreedImage(
-               id: "2",
-               name: "Bulldog",
-               image: UIImage(systemName: "placeholder_image")!
-           )]
+    let images = [
+        BreedImage(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image")!),
+        BreedImage(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image")!)
+    ]
     WaterfallGrid(breedImages: images)
 }

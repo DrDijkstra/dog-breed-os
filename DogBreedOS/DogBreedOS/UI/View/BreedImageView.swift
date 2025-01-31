@@ -8,24 +8,33 @@
 import SwiftUI
 import OpenspanCore
 
+import SwiftUI
+import OpenspanCore
+
 struct BreedImageView: View {
     let breedImage: BreedImage
     let imageWidth: CGFloat
     
     @State private var isShimmering = false
-
+    @State private var imageHeight: CGFloat = 0 // Initial height is 0 to trigger animation
+    
     var body: some View {
         VStack {
             // Calculate aspect ratio
             let aspectRatio = breedImage.height / breedImage.width
-            let imageHeight = imageWidth * aspectRatio
+            let calculatedHeight = imageWidth * aspectRatio
             
             // Check if image is a placeholder
             if breedImage.image == UIImage(named: "placeholder_image") {
                 // Show shimmering effect if image is a placeholder
                 ShimmeringView()
-                    .frame(width: imageWidth, height: imageHeight)
+                    .frame(width: imageWidth, height: calculatedHeight)
                     .cornerRadius(8)
+                    .onAppear {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            imageHeight = calculatedHeight // Animate height change for placeholder
+                        }
+                    }
             } else {
                 // Display the actual image
                 Image(uiImage: breedImage.image)
@@ -34,6 +43,12 @@ struct BreedImageView: View {
                     .frame(width: imageWidth, height: imageHeight)
                     .clipped()
                     .cornerRadius(8)
+                    .opacity(imageHeight > 0 ? 1 : 0) // Fade-in effect for the image
+                    .onAppear {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            imageHeight = calculatedHeight // Animate height change when image loads
+                        }
+                    }
             }
             
             // Display the breed name below the image
