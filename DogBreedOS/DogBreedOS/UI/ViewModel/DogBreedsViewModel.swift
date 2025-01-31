@@ -28,32 +28,44 @@ class DogBreedsViewModel: ObservableObject {
     }
     
     // MARK: - Fetch Data
+    actor ImageFetcher {
+        private var tempFetchedImages: [BreedImage] = []
+        
+        func append(breedImage: BreedImage) {
+            tempFetchedImages.append(breedImage)
+        }
+        
+        func getAll() -> [BreedImage] {
+            return tempFetchedImages
+        }
+    }
+
     func fetchAllBreedsAndImages() async {
         DispatchQueue.main.async {
             self.isLoading = true
             self.errorMessage = nil
         }
-        
-        
+
         do {
             let breeds = try await openSpanCoreService.getBreedList()
             DispatchQueue.main.async {
                 self.breeds = breeds
                 for breed in breeds {
-                    self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
+                    self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name ?? "", image: UIImage(named: "placeholder_image")!))
                 }
                 self.isLoading = false
             }
             
-            // Temporary array to collect fetched images
-            var tempFetchedImages: [BreedImage] = []
-            
+            // Create an instance of the ImageFetcher actor
+            let imageFetcher = ImageFetcher()
+
             try await withThrowingTaskGroup(of: BreedImage?.self) { group in
                 for breed in breeds {
                     let breedName = breed.name ?? ""
                     
                     if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName) {
-                        tempFetchedImages.append(BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
+                        // No need to add the task if image is cached
+                        await imageFetcher.append(breedImage: BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
                         continue
                     }
                     
@@ -74,19 +86,20 @@ class DogBreedsViewModel: ObservableObject {
                         return nil
                     }
                 }
-                
+
                 // Collect results from the group
                 for try await result in group {
                     if let breedImage = result {
                         ImageCacheManager.shared.cacheImage(breedImage.image, forKey: breedImage.name)
-                        tempFetchedImages.append(breedImage)
+                        await imageFetcher.append(breedImage: breedImage)
                     }
                 }
             }
             
-            // Update the breedImagesList on the main thread using GCD
+            // Update the breedImagesList on the main thread
+            let finalImages = await imageFetcher.getAll()
             DispatchQueue.main.async {
-                self.breedImagesList = tempFetchedImages
+                self.breedImagesList = finalImages
             }
             
         } catch {

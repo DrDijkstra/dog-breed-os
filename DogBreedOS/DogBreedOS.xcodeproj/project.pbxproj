@@ -37,6 +37,7 @@
 		6A42CBE02D4C7A1F00845545 /* Exceptions for "DogBreedOS" folder in "DogBreedOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Config/dev.xcconfig,
 				Info.plist,
 			);
 			target = 6AACE2E02D4C6889007913B8 /* DogBreedOS */;
