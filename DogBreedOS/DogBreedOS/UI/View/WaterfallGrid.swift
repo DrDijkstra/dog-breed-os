@@ -55,12 +55,12 @@ struct WaterfallGrid: View {
     let images = [BreedImage(
                id: "1",
                name: "Golden Retriever",
-               image: UIImage(systemName: "photo")!
+               image: UIImage(systemName: "placeholder_image")!
            ),
            BreedImage(
                id: "2",
                name: "Bulldog",
-               image: UIImage(systemName: "photo")!
+               image: UIImage(systemName: "placeholder_image")!
            )]
     WaterfallGrid(breedImages: images)
 }

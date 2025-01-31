@@ -28,27 +28,32 @@ class DogBreedsViewModel: ObservableObject {
     }
     
     // MARK: - Fetch Data
-    @MainActor
     func fetchAllBreedsAndImages() async {
-        isLoading = true
-        errorMessage = nil
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.errorMessage = nil
+        }
+        
         
         do {
             let breeds = try await openSpanCoreService.getBreedList()
-            self.breeds = breeds
-            for breed in breeds {
-                breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
+            DispatchQueue.main.async {
+                self.breeds = breeds
+                for breed in breeds {
+                    self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
+                }
+                self.isLoading = false
             }
-            isLoading = false
             
-            var fetchedImages: [BreedImage] = []
+            // Temporary array to collect fetched images
+            var tempFetchedImages: [BreedImage] = []
             
             try await withThrowingTaskGroup(of: BreedImage?.self) { group in
                 for breed in breeds {
                     let breedName = breed.name ?? ""
                     
                     if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName) {
-                        fetchedImages.append(BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
+                        tempFetchedImages.append(BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
                         continue
                     }
                     
@@ -70,17 +75,18 @@ class DogBreedsViewModel: ObservableObject {
                     }
                 }
                 
+                // Collect results from the group
                 for try await result in group {
                     if let breedImage = result {
                         ImageCacheManager.shared.cacheImage(breedImage.image, forKey: breedImage.name)
-                        fetchedImages.append(breedImage)
+                        tempFetchedImages.append(breedImage)
                     }
                 }
             }
             
-            // Step 3: Update with the real images
-            await MainActor.run {
-                self.breedImagesList = fetchedImages
+            // Update the breedImagesList on the main thread using GCD
+            DispatchQueue.main.async {
+                self.breedImagesList = tempFetchedImages
             }
             
         } catch {
@@ -88,6 +94,7 @@ class DogBreedsViewModel: ObservableObject {
             isLoading = false
         }
     }
+
 
     @MainActor func clearCacheAndReload() async {
         breedImagesList.removeAll()
