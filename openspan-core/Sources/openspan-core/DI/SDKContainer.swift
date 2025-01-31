@@ -10,8 +10,10 @@ import Foundation
 import Swinject
 
 class SDKContainer {
+    
     static var shared: SDKContainer = SDKContainer()
-    private let container = Container()
+    
+    let container = Container()
     private var baseUrl: String = ""
     
     private init() {
