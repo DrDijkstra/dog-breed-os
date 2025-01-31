@@ -16,22 +16,40 @@ struct DogBreedsView: View {
     // MARK: - Body
     var body: some View {
         NavigationView {
-            List {
-                if viewModel.isLoading {
-                    ProgressView("Loading...")
-                } else if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                } else {
-                    ForEach(viewModel.breedImagesList) { breedImage in
-                        if let breed = breed(for: breedImage.name) {
-                            BreedRow(breed: breed, image: breedImage.image)
-                                .transition(.slide)
+            ScrollView {
+                // Define the grid columns with a flexible layout
+                let columns = [
+                    GridItem(.flexible()),
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ]
+                
+                LazyVGrid(columns: columns, spacing: 16) {
+                    if viewModel.isLoading {
+                        ProgressView("Loading...")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        // Display each breed image dynamically
+                        ForEach(viewModel.breedImagesList) { breedImage in
+                            // Calculate the aspect ratio for the image
+                            let aspectRatio = breedImage.height / breedImage.width
+                            
+                            // Display the image with dynamic height based on its aspect ratio
+                            Image(uiImage: breedImage.image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: UIScreen.main.bounds.width / 3 - 16, height: (UIScreen.main.bounds.width / 3 - 16) * aspectRatio)
+                                .clipped()
+                                .cornerRadius(8)
                         }
                     }
                 }
+                .padding()
             }
-            .animation(.default, value: viewModel.breedImagesList)
             .navigationTitle("Dog Breeds")
             .toolbar {
                 Button(action: {
@@ -47,11 +65,6 @@ struct DogBreedsView: View {
                 await viewModel.fetchAllBreedsAndImages()
             }
         }
-    }
-    
-    // MARK: - Helper Function
-    private func breed(for name: String) -> BreedInfo? {
-        return viewModel.breeds.first { $0.name == name }
     }
 }
 

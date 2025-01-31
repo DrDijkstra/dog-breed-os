@@ -15,7 +15,7 @@ class DogBreedsViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var breeds: [BreedInfo] = []
-    @Published var breedImagesList: [BreedImage] = []
+    @Published var breedImagesList: [BreedImage] = [] // Now holding image and its dimensions
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
@@ -58,7 +58,8 @@ class DogBreedsViewModel: ObservableObject {
                             if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
                                 let (data, _) = try await URLSession.shared.data(from: url)
                                 if let image = UIImage(data: data) {
-                                    return BreedImage(id: breedName, name: breedName, image: image)
+                                    let breedImage = BreedImage(id: breedName, name: breedName, image: image)
+                                    return breedImage
                                 }
                             }
                         } catch {
@@ -82,7 +83,6 @@ class DogBreedsViewModel: ObservableObject {
             isLoading = false
         }
     }
-
 
     @MainActor func clearCacheAndReload() async {
         breedImagesList.removeAll()

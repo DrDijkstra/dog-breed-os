@@ -12,11 +12,15 @@ class BreedImage: Identifiable, Equatable {
     let id: String
     let name: String
     var image: UIImage
+    var width: CGFloat
+    var height: CGFloat
     
     init(id: String, name: String, image: UIImage) {
         self.id = id
         self.name = name
         self.image = image
+        self.width = image.size.width
+        self.height = image.size.height
     }
     
     // Required for Equatable conformance
