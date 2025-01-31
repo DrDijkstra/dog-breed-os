@@ -23,14 +23,15 @@ struct DogBreedsView: View {
                     Text(errorMessage)
                         .foregroundColor(.red)
                 } else {
-                    ForEach(viewModel.breeds, id: \.name) { breed in
-                        BreedRow(
-                            breed: breed,
-                            image: viewModel.breedImages[breed.name ?? ""]
-                        )
+                    ForEach(viewModel.breedImagesList) { breedImage in
+                        if let breed = breed(for: breedImage.name) {
+                            BreedRow(breed: breed, image: breedImage.image)
+                                .transition(.slide)
+                        }
                     }
                 }
             }
+            .animation(.default, value: viewModel.breedImagesList)
             .navigationTitle("Dog Breeds")
             .toolbar {
                 Button(action: {
@@ -46,6 +47,11 @@ struct DogBreedsView: View {
                 await viewModel.fetchAllBreedsAndImages()
             }
         }
+    }
+    
+    // MARK: - Helper Function
+    private func breed(for name: String) -> BreedInfo? {
+        return viewModel.breeds.first { $0.name == name }
     }
 }
 
