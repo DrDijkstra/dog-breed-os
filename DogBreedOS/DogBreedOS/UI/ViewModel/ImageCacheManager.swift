@@ -26,6 +26,17 @@ class ImageCacheManager {
         }
     }
     
+    // MARK: - Clear Cache
+    func clearCache() {
+        // Clear memory cache
+        memoryCache.removeAllObjects()
+        
+        // Clear disk cache
+        if fileManager.fileExists(atPath: cacheDirectory.path) {
+            try? fileManager.removeItem(at: cacheDirectory)
+        }
+    }
+    
     // MARK: - Memory Cache
     func getImageFromMemoryCache(forKey key: String) -> UIImage? {
         return memoryCache.object(forKey: key as NSString)

@@ -32,6 +32,16 @@ struct DogBreedsView: View {
                 }
             }
             .navigationTitle("Dog Breeds")
+            .toolbar {
+                Button(action: {
+                    Task {
+                        await viewModel.clearCacheAndReload()
+                    }
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.headline)
+                }
+            }
             .task {
                 await viewModel.fetchAllBreedsAndImages()
             }
