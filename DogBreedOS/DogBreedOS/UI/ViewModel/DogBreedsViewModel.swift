@@ -36,20 +36,22 @@ class DogBreedsViewModel: ObservableObject {
         do {
             let breeds = try await openSpanCoreService.getBreedList()
             self.breeds = breeds
+            for breed in breeds {
+                breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
+            }
             isLoading = false
-
+            
+            var fetchedImages: [BreedImage] = []
+            
             try await withThrowingTaskGroup(of: BreedImage?.self) { group in
                 for breed in breeds {
                     let breedName = breed.name ?? ""
-
+                    
                     if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName) {
-                        let breedImage = BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage)
-                        await MainActor.run {
-                            self.breedImagesList.append(breedImage)
-                        }
+                        fetchedImages.append(BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
                         continue
                     }
-
+                    
                     group.addTask {
                         do {
                             let request = BreedImageInfoRequest(breed: breedName)
@@ -58,8 +60,7 @@ class DogBreedsViewModel: ObservableObject {
                             if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
                                 let (data, _) = try await URLSession.shared.data(from: url)
                                 if let image = UIImage(data: data) {
-                                    let breedImage = BreedImage(id: breedName, name: breedName.capitalized, image: image)
-                                    return breedImage
+                                    return BreedImage(id: breedName, name: breedName.capitalized, image: image)
                                 }
                             }
                         } catch {
@@ -68,16 +69,20 @@ class DogBreedsViewModel: ObservableObject {
                         return nil
                     }
                 }
-
+                
                 for try await result in group {
                     if let breedImage = result {
                         ImageCacheManager.shared.cacheImage(breedImage.image, forKey: breedImage.name)
-                        await MainActor.run {
-                            self.breedImagesList.append(breedImage)
-                        }
+                        fetchedImages.append(breedImage)
                     }
                 }
             }
+            
+            // Step 3: Update with the real images
+            await MainActor.run {
+                self.breedImagesList = fetchedImages
+            }
+            
         } catch {
             errorMessage = "Failed to fetch data: \(error.localizedDescription)"
             isLoading = false
