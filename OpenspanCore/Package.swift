@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "openspan-core",
+    name: "OpenspanCore",
     platforms: [
         .iOS(.v13), // Alamofire supports iOS 13 and above
         .macOS(.v10_15),
@@ -12,8 +12,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "openspan-core",
-            targets: ["openspan-core"]),
+            name: "OpenspanCore",
+            targets: ["OpenspanCore"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.8.0"),
@@ -23,14 +23,14 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "openspan-core",
+            name: "OpenspanCore",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "Swinject", package: "Swinject")
             ]),
         .testTarget(
-            name: "openspan-coreTests",
-            dependencies: ["openspan-core"]
+            name: "OpenspanCoreTests",
+            dependencies: ["OpenspanCore"]
         ),
     ]
 )

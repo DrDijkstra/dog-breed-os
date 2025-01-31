@@ -7,7 +7,7 @@
 
 
 import XCTest
-@testable import openspan_core
+@testable import OpenspanCore
 import Swinject
 
 final class OpenSpanCoreTests: XCTestCase {

@@ -7,7 +7,7 @@
 
 
 import XCTest
-@testable import openspan_core 
+@testable import OpenspanCore
 
 final class OpenSpanCoreServiceImplTests: XCTestCase {
     
