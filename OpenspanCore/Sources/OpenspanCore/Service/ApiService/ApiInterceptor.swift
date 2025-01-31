@@ -10,5 +10,5 @@ import Foundation
 import Alamofire
 
 final class ApiInterceptor : RequestInterceptor {
-    /// it should be implmented in if need to use any token base authorization or need to use any common router
+    /// It should be implemented only when token-based authorization or a common router is required
 }
