@@ -51,7 +51,7 @@ class DogBreedsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.breeds = breeds
                 for breed in breeds {
-                    self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name ?? "", image: UIImage(named: "placeholder_image")!))
+                    self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
                 }
                 self.isLoading = false
             }
@@ -62,8 +62,7 @@ class DogBreedsViewModel: ObservableObject {
             try await withThrowingTaskGroup(of: BreedImage?.self) { group in
                 for breed in breeds {
                     let breedName = breed.name ?? ""
-                    
-                    if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName) {
+                    if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName.lowercased()) {
                         // No need to add the task if image is cached
                         await imageFetcher.append(breedImage: BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
                         continue
@@ -90,7 +89,7 @@ class DogBreedsViewModel: ObservableObject {
                 // Collect results from the group
                 for try await result in group {
                     if let breedImage = result {
-                        ImageCacheManager.shared.cacheImage(breedImage.image, forKey: breedImage.name)
+                        ImageCacheManager.shared.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
                         await imageFetcher.append(breedImage: breedImage)
                     }
                 }

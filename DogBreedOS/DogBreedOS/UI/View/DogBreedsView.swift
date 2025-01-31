@@ -19,6 +19,8 @@ struct DogBreedsView: View {
             ScrollView {
                 WaterfallGrid(breedImages: viewModel.breedImagesList)
                     .padding(16)
+            }.refreshable {
+                await viewModel.fetchAllBreedsAndImages()
             }
             .navigationTitle("Dog Breeds")
             .toolbar {
