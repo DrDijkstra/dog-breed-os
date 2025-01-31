@@ -43,7 +43,7 @@ class DogBreedsViewModel: ObservableObject {
                     let breedName = breed.name ?? ""
 
                     if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName) {
-                        let breedImage = BreedImage(id: breedName, name: breedName, image: cachedImage)
+                        let breedImage = BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage)
                         await MainActor.run {
                             self.breedImagesList.append(breedImage)
                         }
@@ -58,7 +58,7 @@ class DogBreedsViewModel: ObservableObject {
                             if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
                                 let (data, _) = try await URLSession.shared.data(from: url)
                                 if let image = UIImage(data: data) {
-                                    let breedImage = BreedImage(id: breedName, name: breedName, image: image)
+                                    let breedImage = BreedImage(id: breedName, name: breedName.capitalized, image: image)
                                     return breedImage
                                 }
                             }
