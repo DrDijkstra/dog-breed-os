@@ -17,9 +17,8 @@ struct DogBreedsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                // Use the waterfall grid layout
                 WaterfallGrid(breedImages: viewModel.breedImagesList)
-                    .padding(16) // Add padding around the grid
+                    .padding(16)
             }
             .navigationTitle("Dog Breeds")
             .toolbar {
