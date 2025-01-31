@@ -66,39 +66,6 @@ struct BreedImageView: View {
     }
 }
 
-struct ShimmeringView: View {
-    @State private var isShimmering = false
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 8)
-            .fill(LinearGradient(
-                gradient: Gradient(colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.5), Color.gray.opacity(0.3)]),
-                startPoint: .topLeading, endPoint: .bottomTrailing))
-            .shine(isShimmering: $isShimmering)
-            .onAppear {
-                withAnimation(.linear(duration: 1.5).repeatForever(autoreverses: false)) {
-                    isShimmering = true
-                }
-            }
-    }
-}
-
-extension View {
-    func shine(isShimmering: Binding<Bool>) -> some View {
-        self.overlay(
-            GeometryReader { geometry in
-                Rectangle()
-                    .fill(LinearGradient(
-                        gradient: Gradient(colors: [Color.white.opacity(0.7), Color.white.opacity(0)]),
-                        startPoint: .top, endPoint: .bottom))
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .offset(x: isShimmering.wrappedValue ? geometry.size.width : -geometry.size.width)
-                    .animation(Animation.linear(duration: 1.5).repeatForever(autoreverses: false), value: isShimmering.wrappedValue)
-            }
-        )
-    }
-}
-
 #Preview {
     let image = BreedImage(
                id: "1",
