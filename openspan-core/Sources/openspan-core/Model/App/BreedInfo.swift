@@ -19,4 +19,3 @@ public class BreedInfo: Equatable {
         return lhs.name == rhs.name && lhs.subBreeds == rhs.subBreeds
     }
 }
-

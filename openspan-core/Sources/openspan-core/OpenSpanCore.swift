@@ -12,7 +12,7 @@ public class OpenSpanCore {
         
     }
     
-    public func initSDK () {
-        
+    public func initializeSDK (baseUrl: String) {
+        SDKContainer.shared.injectDependency(baseUrl: baseUrl)
     }
 }

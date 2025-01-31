@@ -19,13 +19,12 @@ class ApiServiceImpl: ApiService {
     private let baseUrl: String
     var session: Session
 
-    init(baseUrl: String, timeoutInterval: TimeInterval = 40) {
+    init(baseUrl: String, timeoutInterval: TimeInterval = 40, requestInterceptor: RequestInterceptor? = nil) {
         self.baseUrl = baseUrl
         
         // Configure session
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = timeoutInterval
-        let requestInterceptor = ApiInterceptor()
         self.session = Session(configuration: configuration, interceptor: requestInterceptor)
         
         // Set base URL for requests

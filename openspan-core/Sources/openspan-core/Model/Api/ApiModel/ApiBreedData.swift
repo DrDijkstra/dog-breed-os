@@ -28,4 +28,3 @@ class ApiBreedData: BaseResponse {
         super.init()
     }
 }
-

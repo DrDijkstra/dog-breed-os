@@ -16,8 +16,8 @@ let package = Package(
             targets: ["openspan-core"]),
     ],
     dependencies: [
-        // Add Alamofire as a dependency
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.8.0")
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.8.0"),
+        .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,7 +25,8 @@ let package = Package(
         .target(
             name: "openspan-core",
             dependencies: [
-                .product(name: "Alamofire", package: "Alamofire")
+                .product(name: "Alamofire", package: "Alamofire"),
+                .product(name: "Swinject", package: "Swinject")
             ]),
         .testTarget(
             name: "openspan-coreTests",
