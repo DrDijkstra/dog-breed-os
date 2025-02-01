@@ -20,3 +20,7 @@ struct CacheClearButton: View {
         }
     }
 }
+
+#Preview {
+    CacheClearButton(action: ({}))
+}

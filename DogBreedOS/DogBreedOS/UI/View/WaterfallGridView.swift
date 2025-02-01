@@ -30,14 +30,14 @@ struct WaterfallGridView: View {
         .padding(.horizontal, 4)
     }
 }
-// MARK: - Preview
+
 #Preview {
     var breedImagesList: [CardData] = [
-        CardData(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!, isImageLoaded: true),
         CardData(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
         CardData(id: "3", name: "Labrador", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        CardData(id: "4", name: "Poodle", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        CardData(id: "5", name: "Beagle", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "4", name: "Poodle", image: UIImage(named: "appstore") ?? UIImage(systemName: "photo")!, isImageLoaded: true),
+        CardData(id: "5", name: "Beagle", image: UIImage(named: "appstore") ?? UIImage(systemName: "photo")!,  isImageLoaded: true),
         CardData(id: "6", name: "Rottweiler", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!)
     ]
     

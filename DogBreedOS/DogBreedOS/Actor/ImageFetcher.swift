@@ -5,8 +5,6 @@
 //  Created by Sanjay Dey on 2025-02-01.
 //
 
-
-// MARK: - Fetch Data
 actor ImageFetcher {
     private var tempFetchedImages: [CardData] = []
     
