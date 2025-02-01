@@ -8,19 +8,21 @@
 
 import UIKit
 
-class BreedImage: Identifiable, Hashable {
+class CardData: Identifiable, Hashable {
     let id: String
     let name: String
     @Published var image: UIImage
     var width: CGFloat
     var height: CGFloat
+    var isImageLoaded: Bool = false
     
-    init(id: String, name: String, image: UIImage) {
+    init(id: String, name: String, image: UIImage, isImageLoaded: Bool = false) {
         self.id = id
         self.name = name
         self.image = image
         self.width = image.size.width
         self.height = image.size.height
+        self.isImageLoaded = isImageLoaded
     }
     
     // Conform to Hashable using the `id` property
@@ -29,7 +31,7 @@ class BreedImage: Identifiable, Hashable {
     }
     
     // Required for Equatable conformance
-    static func == (lhs: BreedImage, rhs: BreedImage) -> Bool {
+    static func == (lhs: CardData, rhs: CardData) -> Bool {
         lhs.id == rhs.id && lhs.image == rhs.image
     }
 }

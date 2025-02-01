@@ -46,7 +46,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				UI/Model/BreedImage.swift,
+				UI/Model/CardData.swift,
 				UI/ViewModel/DogBreedsViewModel.swift,
 				UI/ViewModel/WaterfallGridViewModel.swift,
 			);

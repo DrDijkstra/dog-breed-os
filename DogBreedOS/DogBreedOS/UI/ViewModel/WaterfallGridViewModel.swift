@@ -10,15 +10,15 @@ import UIKit
 import Combine
 
 protocol BreedImageProvider: AnyObject {
-   func updateBreedImagesList(_ breedImages: [BreedImage])
+   func updateBreedImagesList(_ breedImages: [CardData])
 }
 
 class WaterfallGridViewModel: ObservableObject , BreedImageProvider{
-    func updateBreedImagesList(_ breedImages: [BreedImage]) {
+    func updateBreedImagesList(_ breedImages: [CardData]) {
         updateColumns(with: breedImages)
     }
     
-    @Published var columns: [[BreedImage]] = []
+    @Published var columns: [[CardData]] = []
     
     private let numberOfColumns: Int
     private var cancellables = Set<AnyCancellable>()
@@ -27,7 +27,7 @@ class WaterfallGridViewModel: ObservableObject , BreedImageProvider{
         self.numberOfColumns = numberOfColumns
     }
     
-    private func updateColumns(with breedImages: [BreedImage]) {
+    private func updateColumns(with breedImages: [CardData]) {
         let newColumns = distributeImagesAcrossColumns(breedImages: breedImages)
         print("Updating columns with \(newColumns.count) columns and total \(breedImages.count) images")
         
@@ -37,8 +37,8 @@ class WaterfallGridViewModel: ObservableObject , BreedImageProvider{
         }
     }
     
-    private func distributeImagesAcrossColumns(breedImages: [BreedImage]) -> [[BreedImage]] {
-        var columns: [[BreedImage]] = Array(repeating: [], count: numberOfColumns)
+    private func distributeImagesAcrossColumns(breedImages: [CardData]) -> [[CardData]] {
+        var columns: [[CardData]] = Array(repeating: [], count: numberOfColumns)
         
         var columnHeights: [CGFloat] = Array(repeating: 0, count: numberOfColumns)
         
@@ -54,7 +54,7 @@ class WaterfallGridViewModel: ObservableObject , BreedImageProvider{
         return columns
     }
     
-    private func calculateImageHeight(for breedImage: BreedImage) -> CGFloat {
+    private func calculateImageHeight(for breedImage: CardData) -> CGFloat {
         let image = breedImage.image
         let aspectRatio = image.size.height / image.size.width
         return imageWidth * aspectRatio

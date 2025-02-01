@@ -21,7 +21,7 @@ struct WaterfallGridView: View {
             ForEach(viewModel.columns, id: \.self) { column in
                 LazyVStack(spacing: 16) {
                     ForEach(column) { breedImage in
-                        BreedImageView(breedImage: breedImage, imageWidth: viewModel.imageWidth)
+                        CardView(cardData: breedImage, imageWidth: viewModel.imageWidth)
                             .transition(.asymmetric(insertion: .scale, removal: .opacity))
                     }
                 }
@@ -32,13 +32,13 @@ struct WaterfallGridView: View {
 }
 // MARK: - Preview
 #Preview {
-    var breedImagesList: [BreedImage] = [
-        BreedImage(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        BreedImage(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        BreedImage(id: "3", name: "Labrador", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        BreedImage(id: "4", name: "Poodle", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        BreedImage(id: "5", name: "Beagle", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        BreedImage(id: "6", name: "Rottweiler", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!)
+    var breedImagesList: [CardData] = [
+        CardData(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "3", name: "Labrador", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "4", name: "Poodle", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "5", name: "Beagle", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
+        CardData(id: "6", name: "Rottweiler", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!)
     ]
     
     let model = WaterfallGridViewModel(numberOfColumns: 2)

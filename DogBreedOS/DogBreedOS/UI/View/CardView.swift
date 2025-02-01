@@ -8,8 +8,8 @@
 import SwiftUI
 import OpenspanCore
 
-struct BreedImageView: View {
-    let breedImage: BreedImage
+struct CardView: View {
+    let cardData: CardData
     let imageWidth: CGFloat
     
     @State private var imageHeight: CGFloat = 0
@@ -17,10 +17,10 @@ struct BreedImageView: View {
     
     var body: some View {
         VStack {
-            let aspectRatio = breedImage.height / breedImage.width
+            let aspectRatio = cardData.height / cardData.width
             let calculatedHeight = imageWidth * aspectRatio
             
-            if breedImage.image == UIImage(named: "placeholder_image") {
+            if !cardData.isImageLoaded {
                 ShimmeringView()
                     .frame(width: imageWidth, height: calculatedHeight)
                     .cornerRadius(8)
@@ -30,7 +30,7 @@ struct BreedImageView: View {
                         }
                     }
             } else {
-                Image(uiImage: breedImage.image)
+                Image(uiImage: cardData.image)
                     .resizable()
                     .scaledToFill()
                     .frame(width: imageWidth, height: imageHeight)
@@ -44,7 +44,7 @@ struct BreedImageView: View {
                     }
             }
             
-            Text(breedImage.name)
+            Text(cardData.name)
                 .font(.headline)
                 .lineLimit(1)
                 .frame(maxWidth: imageWidth, alignment: .center)
@@ -60,10 +60,10 @@ struct BreedImageView: View {
 }
 
 #Preview {
-    let image = BreedImage(
+    let image = CardData(
         id: "1",
         name: "Golden Retriever",
         image: UIImage(named: "placeholder_image")!
     )
-    BreedImageView(breedImage: image, imageWidth: 250)
+    CardView(cardData: image, imageWidth: 250)
 }

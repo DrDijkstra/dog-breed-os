@@ -8,13 +8,13 @@
 
 // MARK: - Fetch Data
 actor ImageFetcher {
-    private var tempFetchedImages: [BreedImage] = []
+    private var tempFetchedImages: [CardData] = []
     
-    func append(breedImage: BreedImage) {
+    func append(breedImage: CardData) {
         tempFetchedImages.append(breedImage)
     }
     
-    func getAll() -> [BreedImage] {
+    func getAll() -> [CardData] {
         return tempFetchedImages
     }
 }

@@ -15,7 +15,7 @@ class DogBreedsViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var breeds: [BreedInfo] = []
-    @Published var breedImagesList: [BreedImage] = []
+    @Published var breedImagesList: [CardData] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
@@ -42,7 +42,7 @@ class DogBreedsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.breeds = breeds
                 for breed in breeds {
-                    self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
+                    self.breedImagesList.append(CardData(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
                 }
                 self.breedImagesList.sort(by: {$0.name < $1.name})
                 self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
@@ -52,12 +52,12 @@ class DogBreedsViewModel: ObservableObject {
             // Create an instance of the ImageFetcher actor
             let imageFetcher = ImageFetcher()
 
-            try await withThrowingTaskGroup(of: BreedImage?.self) { group in
+            try await withThrowingTaskGroup(of: CardData?.self) { group in
                 for breed in breeds {
                     let breedName = breed.name ?? ""
                     if let cachedImage = openSpanCoreService.getImage(forKey: breedName.lowercased()) {
                         // No need to add the task if image is cached
-                        await imageFetcher.append(breedImage: BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
+                        await imageFetcher.append(breedImage: CardData(id: breedName, name: breedName.capitalized, image: cachedImage))
                         continue
                     }
                     
@@ -69,7 +69,7 @@ class DogBreedsViewModel: ObservableObject {
                             if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
                                 let (data, _) = try await URLSession.shared.data(from: url)
                                 if let image = UIImage(data: data) {
-                                    return BreedImage(id: breedName, name: breedName.capitalized, image: image)
+                                    return CardData(id: breedName, name: breedName.capitalized, image: image,isImageLoaded: true)
                                 }
                             }
                         } catch {
