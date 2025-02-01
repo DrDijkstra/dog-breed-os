@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct CacheClearButton: View {
-    @ObservedObject var viewModel: DogBreedsViewModel
+    
+    var action: () -> Void
     
     var body: some View {
         Button(action: {
-            Task {
-                await viewModel.clearCacheAndReload()
-            }
+            action()
         }) {
             Image(systemName: "arrow.clockwise")
                 .font(.headline)

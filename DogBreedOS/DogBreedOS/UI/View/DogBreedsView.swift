@@ -31,7 +31,11 @@ struct DogBreedsView: View {
             }
             .navigationTitle("Dog Breeds")
             .toolbar {
-                CacheClearButton(viewModel: viewModel)
+                CacheClearButton{
+                    Task {
+                        await viewModel.clearCacheAndReload()
+                    }
+                }
             }
             .task {
                 await viewModel.fetchAllBreedsAndImages()

@@ -29,19 +29,6 @@ class DogBreedsViewModel: ObservableObject {
            self.openSpanCoreService = openSpanCoreService
            self.breedImageProvider = breedImageProvider
        }
-    
-    // MARK: - Fetch Data
-    actor ImageFetcher {
-        private var tempFetchedImages: [BreedImage] = []
-        
-        func append(breedImage: BreedImage) {
-            tempFetchedImages.append(breedImage)
-        }
-        
-        func getAll() -> [BreedImage] {
-            return tempFetchedImages
-        }
-    }
 
     func fetchAllBreedsAndImages() async {
         DispatchQueue.main.async {
