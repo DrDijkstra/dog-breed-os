@@ -32,7 +32,7 @@ struct DogBreedOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            DogBreedsView(viewModel: container.resolve(DogBreedsViewModel.self))
+            DogBreedsView(viewModel: container.resolve(DogBreedsViewModel.self)!)
         }
     }
 }

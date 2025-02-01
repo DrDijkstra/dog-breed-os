@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ShimmeringView: View {
+    
     @State private var isShimmering = false
 
     var body: some View {

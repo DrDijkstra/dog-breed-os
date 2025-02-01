@@ -10,17 +10,19 @@ import OpenspanCore
 
 struct DogBreedsView: View {
     
-    // MARK: - ViewModel
-    @StateObject var viewModel: DogBreedsViewModel
+    @StateObject private var viewModel: DogBreedsViewModel
     
-    // MARK: - Body
+    init(viewModel: DogBreedsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 if viewModel.breedImagesList.isEmpty {
                     ErrorView(message: "Failed to load images or no connection. Please try again later.")
                 } else {
-                    WaterfallGrid(breedImages: viewModel.breedImagesList)
+                    WaterfallGridView(viewModel: AppContainer.shared.resolve(WaterfallGridViewModel.self)!)
                         .padding(16)
                 }
             }
@@ -39,6 +41,6 @@ struct DogBreedsView: View {
 }
 
 #Preview {
-    let viewModel = AppContainer.shared.resolve(DogBreedsViewModel.self)
-    DogBreedsView(viewModel: viewModel)
+    let viewModel = AppContainer.shared.resolve(DogBreedsViewModel.self)!
+    return DogBreedsView(viewModel: viewModel)
 }

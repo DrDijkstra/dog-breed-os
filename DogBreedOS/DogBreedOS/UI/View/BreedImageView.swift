@@ -48,10 +48,10 @@ struct BreedImageView: View {
                 .font(.headline)
                 .lineLimit(1)
                 .frame(maxWidth: imageWidth, alignment: .center)
-                .padding(.top, 4)
+                .padding(.top, 2)
                 .foregroundColor(colorScheme == .dark ? .white : .black)
         }
-        .padding()
+        .padding(12)
         .background(colorScheme == .dark ? Color(.systemGray5) : Color.white)
         .cornerRadius(12)
         .shadow(radius: 5)

@@ -49,6 +49,7 @@
 				Manager/ImageCacheManager.swift,
 				UI/Model/BreedImage.swift,
 				UI/ViewModel/DogBreedsViewModel.swift,
+				UI/ViewModel/WaterfallGridViewModel.swift,
 			);
 			target = 6AACE2F02D4C688C007913B8 /* DogBreedOSTests */;
 		};

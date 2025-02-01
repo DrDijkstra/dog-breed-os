@@ -22,10 +22,13 @@ class DogBreedsViewModel: ObservableObject {
     // MARK: - Dependencies
     private let openSpanCoreService: OpenSpanCoreService!
     
+    weak var breedImageProvider: BreedImageProvider?
+    
     // MARK: - Initializer
-    init() {
-        self.openSpanCoreService = OpenSpanCore.shared.openSpanCoreService
-    }
+    init(openSpanCoreService: OpenSpanCoreService, breedImageProvider: BreedImageProvider?) {
+           self.openSpanCoreService = openSpanCoreService
+           self.breedImageProvider = breedImageProvider
+       }
     
     // MARK: - Fetch Data
     actor ImageFetcher {
@@ -54,6 +57,7 @@ class DogBreedsViewModel: ObservableObject {
                 for breed in breeds {
                     self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
                 }
+                self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
                 self.isLoading = false
             }
             
@@ -100,6 +104,7 @@ class DogBreedsViewModel: ObservableObject {
             let finalImages = await imageFetcher.getAll()
             DispatchQueue.main.async {
                 self.breedImagesList = finalImages
+                self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
             }
             
         } catch {
