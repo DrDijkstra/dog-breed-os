@@ -67,7 +67,7 @@ class DogBreedsViewModel: ObservableObject {
             try await withThrowingTaskGroup(of: BreedImage?.self) { group in
                 for breed in breeds {
                     let breedName = breed.name ?? ""
-                    if let cachedImage = ImageCacheManager.shared.getImage(forKey: breedName.lowercased()) {
+                    if let cachedImage = openSpanCoreService.getImage(forKey: breedName.lowercased()) {
                         // No need to add the task if image is cached
                         await imageFetcher.append(breedImage: BreedImage(id: breedName, name: breedName.capitalized, image: cachedImage))
                         continue
@@ -94,7 +94,7 @@ class DogBreedsViewModel: ObservableObject {
                 // Collect results from the group
                 for try await result in group {
                     if let breedImage = result {
-                        ImageCacheManager.shared.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
+                        openSpanCoreService.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
                         await imageFetcher.append(breedImage: breedImage)
                     }
                 }
@@ -117,7 +117,7 @@ class DogBreedsViewModel: ObservableObject {
 
     @MainActor func clearCacheAndReload() async {
         breedImagesList.removeAll()
-        ImageCacheManager.shared.clearCache()
+        openSpanCoreService.clearCache()
         await fetchAllBreedsAndImages()
     }
 }

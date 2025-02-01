@@ -48,7 +48,6 @@
 			membershipExceptions = (
 				Assets.xcassets,
 				"Extension/String+Extention.swift",
-				Manager/ImageCacheManager.swift,
 				UI/Model/BreedImage.swift,
 				UI/ViewModel/DogBreedsViewModel.swift,
 				UI/ViewModel/WaterfallGridViewModel.swift,
