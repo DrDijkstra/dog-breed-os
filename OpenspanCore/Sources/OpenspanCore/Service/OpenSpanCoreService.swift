@@ -10,9 +10,9 @@ import UIKit
 public protocol OpenSpanCoreService {
     func getBreedList() async throws -> [BreedInfo]
     func getRandomBreedPhoto(request: BreedImageInfoRequest) async throws -> BreedImageInfoResponse
-    func getImage(forKey key: String) -> UIImage?
-    func cacheImage(_ image: UIImage, forKey key: String)
-    func clearCache()
+    func getImage(forKey key: String) async -> UIImage?
+    func cacheImage(_ image: UIImage, forKey key: String) async
+    func clearCache() async
 }
 
 class OpenSpanCoreServiceImpl: OpenSpanCoreService {
@@ -33,15 +33,15 @@ class OpenSpanCoreServiceImpl: OpenSpanCoreService {
         try await breedService.getRandomBreedPhoto(request: request)
     }
     
-    func getImage(forKey key: String) -> UIImage? {
-        imageCacheService.getImage(forKey: key)
+    func getImage(forKey key: String) async -> UIImage? {
+        return await imageCacheService.getImage(forKey: key)
     }
     
-    func cacheImage(_ image: UIImage, forKey key: String) {
-        imageCacheService.cacheImage(image, forKey: key)
+    func cacheImage(_ image: UIImage, forKey key: String) async {
+        return await imageCacheService.cacheImage(image, forKey: key)
     }
     
-    func clearCache() {
-        imageCacheService.clearCache()
+    func clearCache() async {
+        return await imageCacheService.clearCache()
     }
 }

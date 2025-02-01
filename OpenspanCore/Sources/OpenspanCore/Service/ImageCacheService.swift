@@ -8,9 +8,9 @@
 import UIKit
 
 protocol CacheService {
-    func getImage(forKey key: String) -> UIImage?
-    func cacheImage(_ image: UIImage, forKey key: String)
-    func clearCache()
+    func getImage(forKey key: String) async -> UIImage?
+    func cacheImage(_ image: UIImage, forKey key: String) async
+    func clearCache() async
 }
 
 class ImageCacheService: CacheService {
@@ -22,27 +22,27 @@ class ImageCacheService: CacheService {
         self.diskCacheService = diskCacheService
     }
     
-    func getImage(forKey key: String) -> UIImage? {
-        if let image = memoryCacheService.getImage(forKey: key) {
+    func getImage(forKey key: String) async -> UIImage? {
+        if let image = await memoryCacheService.getImage(forKey: key) {
             return image
         }
         
         // Then check disk cache
-        if let image = diskCacheService.getImage(forKey: key) {
-            memoryCacheService.cacheImage(image, forKey: key)
+        if let image = await diskCacheService.getImage(forKey: key) {
+            await memoryCacheService.cacheImage(image, forKey: key)
             return image
         }
         
         return nil
     }
     
-    func cacheImage(_ image: UIImage, forKey key: String) {
-        memoryCacheService.cacheImage(image, forKey: key)
-        diskCacheService.cacheImage(image, forKey: key)
+    func cacheImage(_ image: UIImage, forKey key: String) async {
+        await memoryCacheService.cacheImage(image, forKey: key)
+        await diskCacheService.cacheImage(image, forKey: key)
     }
     
-    func clearCache() {
-        memoryCacheService.clearCache()
-        diskCacheService.clearCache()
+    func clearCache() async {
+        await memoryCacheService.clearCache()
+        await diskCacheService.clearCache()
     }
 }

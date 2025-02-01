@@ -9,7 +9,6 @@
 import XCTest
 @testable import OpenspanCore
 import UIKit
-import CoreImage
 
 final class DiskCacheTests: XCTestCase {
     var diskCache: DiskCacheService!
@@ -17,43 +16,62 @@ final class DiskCacheTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        diskCache = DiskCache(cacheDirectoryString: testCacheDirectory)
+        diskCache = DiskCache() // Assuming no need for `cacheDirectoryString` parameter anymore.
     }
 
     override func tearDown() {
-        diskCache.clearCache()
+        let expectation = self.expectation(description: "Clear Cache Expectation")
+        
+        // Perform async cleanup inside Task
+        Task {
+            await diskCache.clearCache() // Perform async operation
+            expectation.fulfill() // Fulfill the expectation once async operation completes
+        }
+        
+        // Wait for the async operation to complete within the given timeout
+        wait(for: [expectation], timeout: 5.0)
+        
         diskCache = nil
         super.tearDown()
     }
 
-    func testCacheImage() {
+    func testCacheImage() async {
         let bundle = Bundle.module
-        let testImage = UIImage(named: "Hello_World",
-                               in: bundle,
-                               compatibleWith: nil)!
+        guard let testImage = UIImage(named: "Hello_World", in: bundle, compatibleWith: nil) else {
+            XCTFail("Image not found")
+            return
+        }
         let key = "testKey"
 
-        diskCache.cacheImage(testImage, forKey: key)
-        let cachedImage = diskCache.getImage(forKey: key)
+        // Cache image
+        await diskCache.cacheImage(testImage, forKey: key)
 
-        XCTAssertNotNil(cachedImage, "Cached image should not be nil")
-        XCTAssertTrue(Utlis.areImagesAlmostSame(testImage, cachedImage!, tolerance: 0.01), "Cached image should be visually similar to the stored image")
+        // Retrieve the cached image
+        if let cachedImage = await diskCache.getImage(forKey: key) {
+            XCTAssertTrue(Utlis.areImagesAlmostSame(testImage, cachedImage, tolerance: 0.01),
+                          "Cached image should be visually similar to the stored image")
+        } else {
+            XCTFail("Cached image should not be nil")
+        }
     }
 
-    func testRetrieveNonexistentImage() {
-        let cachedImage = diskCache.getImage(forKey: "nonExistentKey")
+    func testRetrieveNonexistentImage() async {
+        let cachedImage = await diskCache.getImage(forKey: "nonExistentKey")
         XCTAssertNil(cachedImage, "Should return nil for a non-existent key")
     }
 
-    func testClearCache() {
+    func testClearCache() async {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
 
-        diskCache.cacheImage(testImage, forKey: key)
-        diskCache.clearCache()
+        // Cache an image
+        await diskCache.cacheImage(testImage, forKey: key)
 
-        let cachedImage = diskCache.getImage(forKey: key)
+        // Clear the cache
+        await diskCache.clearCache()
+
+        // Try to retrieve the image after clearing the cache
+        let cachedImage = await diskCache.getImage(forKey: key)
         XCTAssertNil(cachedImage, "Cache should be empty after clearing")
     }
-
 }

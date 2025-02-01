@@ -21,92 +21,119 @@ class DogBreedsViewModel: ObservableObject {
     
     // MARK: - Dependencies
     private let openSpanCoreService: OpenSpanCoreService!
-    
     weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
     init(openSpanCoreService: OpenSpanCoreService, breedImageProvider: CardImageProvider?) {
-           self.openSpanCoreService = openSpanCoreService
-           self.breedImageProvider = breedImageProvider
-       }
-
+        self.openSpanCoreService = openSpanCoreService
+        self.breedImageProvider = breedImageProvider
+    }
+    
+    // MARK: - Public Methods
     func fetchAllBreedsAndImages() async {
+        await resetState()
+        
+        do {
+            let breeds = try await fetchBreeds()
+            await updateBreeds(breeds)
+            
+            let breedImages = try await fetchImages(for: breeds)
+            await updateBreedImages(breedImages)
+            
+        } catch {
+            await handleError(error)
+        }
+    }
+    
+    @MainActor func clearCacheAndReload() async {
+        breedImagesList.removeAll()
+        openSpanCoreService.clearCache()
+        await fetchAllBreedsAndImages()
+    }
+    
+    @MainActor func deleteBreeds() {
+        self.breedImagesList.removeAll()
+        self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func resetState() async {
         DispatchQueue.main.async {
             self.breedImagesList.removeAll()
             self.isLoading = true
             self.errorMessage = nil
         }
-
-        do {
-            let breeds = try await openSpanCoreService.getBreedList()
-            DispatchQueue.main.async {
-                self.breeds = breeds
-                for breed in breeds {
-                    self.breedImagesList.append(CardData(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
-                }
-                self.breedImagesList.sort(by: {$0.name < $1.name})
-                self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
-                self.isLoading = false
+    }
+    
+    private func fetchBreeds() async throws -> [BreedInfo] {
+        return try await openSpanCoreService.getBreedList()
+    }
+    
+    private func updateBreeds(_ breeds: [BreedInfo]) async {
+        DispatchQueue.main.async {
+            self.breeds = breeds
+            self.breedImagesList = breeds.map {
+                CardData(id: $0.name ?? "", name: $0.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!)
             }
-            
-            // Create an instance of the ImageFetcher actor
-            let imageFetcher = ImageFetcher()
-
-            try await withThrowingTaskGroup(of: CardData?.self) { group in
-                for breed in breeds {
-                    let breedName = breed.name ?? ""
-                    if let cachedImage = openSpanCoreService.getImage(forKey: breedName.lowercased()) {
-                        // No need to add the task if image is cached
-                        await imageFetcher.append(breedImage: CardData(id: breedName, name: breedName.capitalized, image: cachedImage))
-                        continue
-                    }
-                    
-                    group.addTask {
-                        do {
-                            let request = BreedImageInfoRequest(breed: breedName)
-                            let response = try await self.openSpanCoreService.getRandomBreedPhoto(request: request)
-                            
-                            if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
-                                let (data, _) = try await URLSession.shared.data(from: url)
-                                if let image = UIImage(data: data) {
-                                    return CardData(id: breedName, name: breedName.capitalized, image: image,isImageLoaded: true)
-                                }
-                            }
-                        } catch {
-                            print("Error fetching image for \(breedName): \(error)")
-                        }
-                        return nil
-                    }
-                }
-
-                // Collect results from the group
-                for try await result in group {
-                    if let breedImage = result {
-                        openSpanCoreService.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
-                        await imageFetcher.append(breedImage: breedImage)
-                    }
-                }
-            }
-            
-            // Update the breedImagesList on the main thread
-            let finalImages = await imageFetcher.getAll()
-            DispatchQueue.main.async {
-                self.breedImagesList = finalImages
-                self.breedImagesList.sort(by: {$0.name < $1.name})
-                self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
-            }
-            
-        } catch {
-            DispatchQueue.main.async {
-                self.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
-                self.isLoading = false
-            }
+            self.breedImagesList.sort(by: { $0.name < $1.name })
+            self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
         }
     }
-
-    @MainActor func clearCacheAndReload() async {
-        breedImagesList.removeAll()
-        openSpanCoreService.clearCache()
-        await fetchAllBreedsAndImages()
+    
+    private func fetchImages(for breeds: [BreedInfo]) async throws -> [CardData] {
+        let imageFetcher = ImageFetcher()
+        
+        try await withThrowingTaskGroup(of: CardData?.self) { group in
+            for breed in breeds {
+                let breedName = breed.name ?? ""
+                if let cachedImage = openSpanCoreService.getImage(forKey: breedName.lowercased()) {
+                    await imageFetcher.append(breedImage: CardData(id: breedName, name: breedName.capitalized, image: cachedImage))
+                    continue
+                }
+                
+                group.addTask {
+                    do {
+                        let request = BreedImageInfoRequest(breed: breedName)
+                        let response = try await self.openSpanCoreService.getRandomBreedPhoto(request: request)
+                        
+                        if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
+                            let (data, _) = try await URLSession.shared.data(from: url)
+                            if let image = UIImage(data: data) {
+                                return CardData(id: breedName, name: breedName.capitalized, image: image, isImageLoaded: true)
+                            }
+                        }
+                    } catch {
+                        print("Error fetching image for \(breedName): \(error)")
+                    }
+                    return nil
+                }
+            }
+            
+            for try await result in group {
+                if let breedImage = result {
+                    openSpanCoreService.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
+                    await imageFetcher.append(breedImage: breedImage)
+                }
+            }
+        }
+        
+        return await imageFetcher.getAll()
+    }
+    
+    private func updateBreedImages(_ breedImages: [CardData]) async {
+        let sortedData = breedImages.sorted(by: { $0.name < $1.name })
+        DispatchQueue.main.async {
+            self.breedImagesList = sortedData
+            self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
+            self.isLoading = false
+        }
+    }
+    
+    private func handleError(_ error: Error) async {
+        DispatchQueue.main.async {
+            self.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
+            self.isLoading = false
+        }
     }
 }

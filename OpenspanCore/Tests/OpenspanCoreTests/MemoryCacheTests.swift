@@ -19,30 +19,42 @@ final class MemoryCacheTests: XCTestCase {
     }
 
     override func tearDown() {
-        memoryCache.clearCache()
+        Task {
+            await memoryCache.clearCache()
+        }
         memoryCache = nil
         super.tearDown()
     }
 
-    func testCacheImage() {
+    func testCacheImage() async {
+        // Given
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
 
-        memoryCache.cacheImage(testImage, forKey: key)
-        let cachedImage = memoryCache.getImage(forKey: key)
+        // When: Cache the image
+        await memoryCache.cacheImage(testImage, forKey: key)
 
-        XCTAssertNotNil(cachedImage, "Cached image should not be nil")
-        XCTAssertEqual(cachedImage, testImage, "Cached image should be the same as the stored image")
+        // Then: Retrieve the cached image
+        if let cachedImage = await memoryCache.getImage(forKey: key) {
+            XCTAssertNotNil(cachedImage, "Cached image should not be nil")
+            XCTAssertEqual(cachedImage, testImage, "Cached image should be the same as the stored image")
+        } else {
+            XCTFail("Cached image is nil")
+        }
     }
 
-    func testClearCache() {
+    func testClearCache() async {
+        // Given
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
 
-        memoryCache.cacheImage(testImage, forKey: key)
-        memoryCache.clearCache()
+        // When: Cache the image
+        await memoryCache.cacheImage(testImage, forKey: key)
 
-        let cachedImage = memoryCache.getImage(forKey: key)
+        // Then: Clear the cache and check if image is removed
+        await memoryCache.clearCache()
+
+        let cachedImage = await memoryCache.getImage(forKey: key)
         XCTAssertNil(cachedImage, "Cache should be empty after clearing")
     }
 }

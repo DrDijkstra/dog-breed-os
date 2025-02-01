@@ -10,23 +10,42 @@ import Foundation
 import UIKit
 
 protocol MemoryCacheService {
-    func getImage(forKey key: String) -> UIImage?
-    func cacheImage(_ image: UIImage, forKey key: String)
-    func clearCache()
+    func getImage(forKey key: String) async -> UIImage?
+    func cacheImage(_ image: UIImage, forKey key: String) async
+    func clearCache() async
 }
 
 class MemoryCache: MemoryCacheService {
+    
     private let memoryCache = NSCache<NSString, UIImage>()
     
-    func getImage(forKey key: String) -> UIImage? {
-        return memoryCache.object(forKey: key as NSString)
+    private let cacheQueue = DispatchQueue(label: "com.example.cacheQueue")
+
+    func getImage(forKey key: String) async -> UIImage? {
+        await withCheckedContinuation { continuation in
+            cacheQueue.async {
+                let image = self.memoryCache.object(forKey: key as NSString)
+                continuation.resume(returning: image)
+            }
+        }
     }
-    
-    func cacheImage(_ image: UIImage, forKey key: String) {
-        memoryCache.setObject(image, forKey: key as NSString)
+
+    func cacheImage(_ image: UIImage, forKey key: String) async {
+        await withCheckedContinuation { continuation in
+            cacheQueue.async {
+                self.memoryCache.setObject(image, forKey: key as NSString)
+                continuation.resume()
+            }
+        }
     }
-    
-    func clearCache() {
-        memoryCache.removeAllObjects()
+
+    func clearCache() async {
+        await withCheckedContinuation { continuation in
+            cacheQueue.async {
+                self.memoryCache.removeAllObjects()
+                continuation.resume()
+            }
+        }
     }
 }
+

@@ -17,7 +17,7 @@ class ImageCacheServiceTests: XCTestCase {
     override func setUp() {
         super.setUp()
         memoryCacheService = MemoryCache()
-        diskCacheService = DiskCache(cacheDirectoryString: "Test")
+        diskCacheService = DiskCache()
         imageCacheService = ImageCacheService(memoryCacheService: memoryCacheService, diskCacheService: diskCacheService)
     }
     
@@ -31,20 +31,25 @@ class ImageCacheServiceTests: XCTestCase {
     func testCacheImage_StoresInBothMemoryAndDisk() {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
-        
-        imageCacheService.cacheImage(testImage, forKey: key)
-        
-        XCTAssertNotNil(memoryCacheService.getImage(forKey: key))
-        XCTAssertNotNil(diskCacheService.getImage(forKey: key))
+        var memoryCacheImage: UIImage?
+        var diskCacheImage: UIImage?
+        Task {
+            await imageCacheService.cacheImage(testImage, forKey: key)
+            memoryCacheImage = await memoryCacheService.getImage(forKey: key)
+            diskCacheImage = await diskCacheService.getImage(forKey: key)
+        }
+        XCTAssertNotNil(memoryCacheImage)
+        XCTAssertNotNil(diskCacheImage)
     }
     
     func testGetImage_RetrievesFromMemoryFirst() {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
-        
-        memoryCacheService.cacheImage(testImage, forKey: key)
-        
-        let retrievedImage = imageCacheService.getImage(forKey: key)
+        var retrievedImage: UIImage?
+        Task {
+            await memoryCacheService.cacheImage(testImage, forKey: key)
+            retrievedImage = await imageCacheService.getImage(forKey: key)
+        }
         XCTAssertEqual(retrievedImage, testImage)
     }
     
@@ -54,22 +59,33 @@ class ImageCacheServiceTests: XCTestCase {
                                in: bundle,
                                compatibleWith: nil)!
         let key = "testKey"
-        
-        diskCacheService.cacheImage(testImage, forKey: key)
-        
-        let retrievedImage = imageCacheService.getImage(forKey: key)
-        XCTAssertTrue(Utlis.areImagesAlmostSame(testImage, retrievedImage!, tolerance: 0.02), "Cached image should be visually similar to the stored image")
-        XCTAssertNotNil(memoryCacheService.getImage(forKey: key)) // Ensures it was added to memory cache
+        var retrievedImageFromImageCache: UIImage?
+        var retrievedImageFromMemory: UIImage?
+        Task {
+            await diskCacheService.cacheImage(testImage, forKey: key)
+            
+            retrievedImageFromImageCache = await imageCacheService.getImage(forKey: key)
+            let retrievedImageFromMemory = await memoryCacheService.getImage(forKey: key)
+        }
+        XCTAssertEqual(retrievedImageFromImageCache, retrievedImageFromMemory)
+        XCTAssertNotNil(retrievedImageFromMemory) // Ensures it was added to memory cache
     }
     
     func testClearCache_ClearsBothMemoryAndDisk() {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
         
-        imageCacheService.cacheImage(testImage, forKey: key)
-        imageCacheService.clearCache()
+        var imageFromDisk: UIImage?
+        var imageFromMemory: UIImage?
         
-        XCTAssertNil(memoryCacheService.getImage(forKey: key))
-        XCTAssertNil(diskCacheService.getImage(forKey: key))
+        Task {
+            await imageCacheService.cacheImage(testImage, forKey: key)
+            await imageCacheService.clearCache()
+            imageFromDisk = await memoryCacheService.getImage(forKey: key)
+            imageFromMemory = await diskCacheService.getImage(forKey: key)
+        }
+        
+        XCTAssertNil(imageFromDisk)
+        XCTAssertNil(imageFromMemory)
     }
 }

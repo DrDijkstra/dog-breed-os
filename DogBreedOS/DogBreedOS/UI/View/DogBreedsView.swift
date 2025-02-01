@@ -11,6 +11,7 @@ import OpenspanCore
 struct DogBreedsView: View {
     
     @StateObject private var viewModel: DogBreedsViewModel
+    @State private var showDeleteConfirmation = false
     
     init(viewModel: DogBreedsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -19,9 +20,10 @@ struct DogBreedsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                if viewModel.breedImagesList.isEmpty {
-                    ErrorView(message: "Failed to load images or no connection. Please try again later.")
-                } else {
+                if let errorMessage = viewModel.errorMessage{
+                    ErrorView(message: errorMessage)
+                }
+                else {
                     WaterfallGridView(viewModel: AppContainer.shared.resolve(WaterfallGridViewModel.self)!)
                         .padding(16)
                 }
@@ -36,6 +38,20 @@ struct DogBreedsView: View {
                         await viewModel.clearCacheAndReload()
                     }
                 }
+                
+                DeleteButton{
+                    Task {
+                        showDeleteConfirmation = true
+                    }
+                }
+            }
+            .alert("Delete All Breeds?", isPresented: $showDeleteConfirmation) {
+                Button("Yes", role: .destructive) {
+                    Task {
+                        viewModel.deleteBreeds()
+                    }
+                }
+                Button("No", role: .cancel) {}
             }
             .task {
                 await viewModel.fetchAllBreedsAndImages()

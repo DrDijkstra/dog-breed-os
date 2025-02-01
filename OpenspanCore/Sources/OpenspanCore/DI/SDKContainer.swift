@@ -45,7 +45,7 @@ class SDKContainer {
         }
         .inObjectScope(.container)
         container.register(DiskCacheService.self) { _ in
-            DiskCache(cacheDirectoryString: self.appID)
+            DiskCache()
         }
         .inObjectScope(.container)
         container.register(ImageCacheService.self) { _ in
