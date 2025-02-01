@@ -32,7 +32,7 @@ struct WaterfallGridView: View {
 }
 
 #Preview {
-    var breedImagesList: [CardData] = [
+    let breedImagesList: [CardData] = [
         CardData(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!, isImageLoaded: true),
         CardData(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
         CardData(id: "3", name: "Labrador", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),

@@ -45,8 +45,19 @@
 		6A42CC2A2D4D034A00845545 /* Exceptions for "DogBreedOS" folder in "DogBreedOSTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Actor/ImageFetcher.swift,
 				Assets.xcassets,
+				CommonUI/ErrorView.swift,
+				DI/AppContainer.swift,
+				DogBreedOSApp.swift,
+				"Extension/View+Extension.swift",
 				UI/Model/CardData.swift,
+				UI/View/CacheClearButton.swift,
+				UI/View/CardView.swift,
+				UI/View/DeleteButton.swift,
+				UI/View/DogBreedsView.swift,
+				UI/View/ShimmeringView.swift,
+				UI/View/WaterfallGridView.swift,
 				UI/ViewModel/DogBreedsViewModel.swift,
 				UI/ViewModel/WaterfallGridViewModel.swift,
 			);
@@ -453,9 +464,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sanjay.DogBreedOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -484,9 +499,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sanjay.DogBreedOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

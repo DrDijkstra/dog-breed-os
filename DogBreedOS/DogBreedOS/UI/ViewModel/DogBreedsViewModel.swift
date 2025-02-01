@@ -19,7 +19,7 @@ class DogBreedsViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
-    private let openSpanCoreService: OpenSpanCoreService!
+    let openSpanCoreService: OpenSpanCoreService!
     weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
@@ -130,7 +130,7 @@ class DogBreedsViewModel: ObservableObject {
         }
     }
     
-    private func handleError(_ error: Error) async {
+    func handleError(_ error: Error) async {
         DispatchQueue.main.async {
             self.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
             self.isLoading = false

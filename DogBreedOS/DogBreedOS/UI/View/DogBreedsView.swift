@@ -20,12 +20,14 @@ struct DogBreedsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                if let errorMessage = viewModel.errorMessage{
+                if let errorMessage = viewModel.errorMessage {
                     ErrorView(message: errorMessage)
+                        .accessibilityIdentifier("errorView") // Add identifier for error view
                 }
                 else {
                     WaterfallGridView(viewModel: AppContainer.shared.resolve(WaterfallGridViewModel.self)!)
                         .padding(16)
+                        .accessibilityIdentifier("waterfallGridView") // Add identifier for grid view
                 }
             }
             .refreshable {
@@ -34,17 +36,19 @@ struct DogBreedsView: View {
             }
             .navigationTitle("Dog Breeds")
             .toolbar {
-                CacheClearButton{
+                CacheClearButton {
                     Task {
                         await viewModel.clearCacheAndReload()
                     }
                 }
+                .accessibilityIdentifier("cacheClearButton") // Add identifier for cache clear button
                 
-                DeleteButton{
+                DeleteButton {
                     Task {
                         showDeleteConfirmation = true
                     }
                 }
+                .accessibilityIdentifier("deleteButton") // Add identifier for delete button
             }
             .alert("Delete All Breeds?", isPresented: $showDeleteConfirmation) {
                 Button("Yes", role: .destructive) {
@@ -52,11 +56,15 @@ struct DogBreedsView: View {
                         viewModel.deleteBreeds()
                     }
                 }
+                .accessibilityIdentifier("deleteConfirmationYesButton") // Add identifier for "Yes" button
+                
                 Button("No", role: .cancel) {}
+                .accessibilityIdentifier("deleteConfirmationNoButton") // Add identifier for "No" button
             }
             .task {
                 await viewModel.fetchAllBreedsAndImages()
             }
+            .accessibilityIdentifier("dogBreedsScrollView") // Add identifier for the ScrollView
         }
     }
 }
