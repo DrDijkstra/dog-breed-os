@@ -11,7 +11,7 @@ import UIKit
 class CardData: Identifiable, Hashable {
     let id: String
     let name: String
-    @Published var image: UIImage
+    var image: UIImage
     var width: CGFloat
     var height: CGFloat
     var isImageLoaded: Bool = false

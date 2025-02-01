@@ -47,7 +47,7 @@ class DogBreedsViewModel: ObservableObject {
     
     @MainActor func clearCacheAndReload() async {
         breedImagesList.removeAll()
-        openSpanCoreService.clearCache()
+        await openSpanCoreService.clearCache()
         await fetchAllBreedsAndImages()
     }
     
@@ -87,8 +87,9 @@ class DogBreedsViewModel: ObservableObject {
         try await withThrowingTaskGroup(of: CardData?.self) { group in
             for breed in breeds {
                 let breedName = breed.name ?? ""
-                if let cachedImage = openSpanCoreService.getImage(forKey: breedName.lowercased()) {
-                    await imageFetcher.append(breedImage: CardData(id: breedName, name: breedName.capitalized, image: cachedImage))
+                if let cachedImage = await openSpanCoreService.getImage(forKey: breedName.lowercased()) {
+                    let cardData = CardData(id: breedName, name: breedName.capitalized, image: cachedImage, isImageLoaded: true)
+                    await imageFetcher.append(breedImage: cardData)
                     continue
                 }
                 
@@ -112,7 +113,7 @@ class DogBreedsViewModel: ObservableObject {
             
             for try await result in group {
                 if let breedImage = result {
-                    openSpanCoreService.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
+                    await openSpanCoreService.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
                     await imageFetcher.append(breedImage: breedImage)
                 }
             }

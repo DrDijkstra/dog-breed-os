@@ -29,11 +29,9 @@ class WaterfallGridViewModel: ObservableObject , CardImageProvider{
     
     private func updateColumns(with breedImages: [CardData]) {
         let newColumns = distributeImagesAcrossColumns(breedImages: breedImages)
-        print("Updating columns with \(newColumns.count) columns and total \(breedImages.count) images")
         
         DispatchQueue.main.async {
             self.columns = newColumns
-            print("Columns updated. First column count: \(self.columns.first?.count ?? 0)")
         }
     }
     
