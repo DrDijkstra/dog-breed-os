@@ -78,5 +78,7 @@ final class DogBreedsViewUITests: XCTestCase {
         yesButton.tap()
 
         // Verify that the data is deleted (you may need to add a visual indicator or state check)
+        // Wait for 5 seconds after deletion
+        sleep(5)
     }
 }
