@@ -9,24 +9,39 @@ import XCTest
 
 final class DogBreedOSUITestsLaunchTests: XCTestCase {
 
+    // MARK: - Properties
+
+    private var app: XCUIApplication!
+
+    // MARK: - Lifecycle
+
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
+        return true
     }
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app = XCUIApplication()
     }
+
+    // MARK: - Tests
 
     @MainActor
     func testLaunch() throws {
-        let app = XCUIApplication()
         app.launch()
 
         // Insert steps here to perform after app launch but before taking a screenshot,
-        // such as logging into a test account or navigating somewhere in the app
+        // such as logging into a test account or navigating somewhere in the app.
 
-        let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = "Launch Screen"
+        captureScreenshot(named: "Launch Screen")
+    }
+
+    // MARK: - Helper Methods
+
+    private func captureScreenshot(named name: String) {
+        let screenshot = app.screenshot()
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
     }
