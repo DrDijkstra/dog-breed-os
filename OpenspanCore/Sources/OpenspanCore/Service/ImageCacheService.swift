@@ -23,14 +23,12 @@ class ImageCacheService: CacheService {
     }
     
     func getImage(forKey key: String) -> UIImage? {
-        // First try memory cache
         if let image = memoryCacheService.getImage(forKey: key) {
             return image
         }
         
         // Then check disk cache
         if let image = diskCacheService.getImage(forKey: key) {
-            // Cache the image in memory for future use
             memoryCacheService.cacheImage(image, forKey: key)
             return image
         }

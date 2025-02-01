@@ -15,7 +15,7 @@ class DogBreedsViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var breeds: [BreedInfo] = []
-    @Published var breedImagesList: [BreedImage] = [] // Now holding image and its dimensions
+    @Published var breedImagesList: [BreedImage] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
@@ -57,6 +57,7 @@ class DogBreedsViewModel: ObservableObject {
                 for breed in breeds {
                     self.breedImagesList.append(BreedImage(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
                 }
+                self.breedImagesList.sort(by: {$0.name < $1.name})
                 self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
                 self.isLoading = false
             }
@@ -104,6 +105,7 @@ class DogBreedsViewModel: ObservableObject {
             let finalImages = await imageFetcher.getAll()
             DispatchQueue.main.async {
                 self.breedImagesList = finalImages
+                self.breedImagesList.sort(by: {$0.name < $1.name})
                 self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
             }
             

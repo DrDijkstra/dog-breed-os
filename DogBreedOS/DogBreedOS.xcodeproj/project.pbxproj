@@ -38,7 +38,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Config/dev.xcconfig,
-				"Extension/Data+Extension.swift",
 				Info.plist,
 			);
 			target = 6AACE2E02D4C6889007913B8 /* DogBreedOS */;
@@ -47,7 +46,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				"Extension/String+Extention.swift",
 				UI/Model/BreedImage.swift,
 				UI/ViewModel/DogBreedsViewModel.swift,
 				UI/ViewModel/WaterfallGridViewModel.swift,
@@ -56,22 +54,11 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		6A42CC482D4DA65A00845545 /* Exceptions for "DogBreedOS" folder in "Copy Bundle Resources" phase from "DogBreedOS" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 6AACE2DF2D4C6889007913B8 /* Resources */;
-			membershipExceptions = (
-				"Extension/Data+Extension.swift",
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6AACE2E32D4C6889007913B8 /* DogBreedOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				6A42CBE02D4C7A1F00845545 /* Exceptions for "DogBreedOS" folder in "DogBreedOS" target */,
-				6A42CC482D4DA65A00845545 /* Exceptions for "DogBreedOS" folder in "Copy Bundle Resources" phase from "DogBreedOS" target */,
 				6A42CC2A2D4D034A00845545 /* Exceptions for "DogBreedOS" folder in "DogBreedOSTests" target */,
 			);
 			path = DogBreedOS;
