@@ -29,7 +29,7 @@ struct DogBreedsView: View {
                 }
             }
             .refreshable {
-                viewModel.breedImagesList = []
+                viewModel.cardDataList = []
                 await viewModel.fetchAllBreedsAndImages()
             }
             .navigationTitle("Dog Breeds")

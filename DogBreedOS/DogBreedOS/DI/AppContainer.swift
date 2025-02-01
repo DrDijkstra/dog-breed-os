@@ -36,8 +36,8 @@ class AppContainer {
         
         container.register(DogBreedsViewModel.self) { resolver in
             let openSpanCoreService = resolver.resolve(OpenSpanCoreService.self)!
-            let breedImageProvider = resolver.resolve(CardImageProvider.self)!
-            let model = DogBreedsViewModel(openSpanCoreService: openSpanCoreService, breedImageProvider: breedImageProvider)
+            let cardImageProvider = resolver.resolve(CardImageProvider.self)!
+            let model = DogBreedsViewModel(openSpanCoreService: openSpanCoreService, cardImageProvider: cardImageProvider)
             return model
         }
         .inObjectScope(.transient)

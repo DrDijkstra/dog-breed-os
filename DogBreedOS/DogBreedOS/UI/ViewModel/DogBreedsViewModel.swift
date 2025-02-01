@@ -5,7 +5,6 @@
 //  Created by Sanjay Dey on 2025-01-30.
 //
 
-
 import Foundation
 import Combine
 import OpenspanCore
@@ -15,7 +14,7 @@ class DogBreedsViewModel: ObservableObject {
     
     // MARK: - Published Properties
     @Published var breeds: [BreedInfo] = []
-    @Published var breedImagesList: [CardData] = []
+    @Published var cardDataList: [CardData] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
@@ -24,9 +23,9 @@ class DogBreedsViewModel: ObservableObject {
     weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
-    init(openSpanCoreService: OpenSpanCoreService, breedImageProvider: CardImageProvider?) {
+    init(openSpanCoreService: OpenSpanCoreService, cardImageProvider: CardImageProvider?) {
         self.openSpanCoreService = openSpanCoreService
-        self.breedImageProvider = breedImageProvider
+        self.breedImageProvider = cardImageProvider
     }
     
     // MARK: - Public Methods
@@ -46,21 +45,21 @@ class DogBreedsViewModel: ObservableObject {
     }
     
     @MainActor func clearCacheAndReload() async {
-        breedImagesList.removeAll()
+        cardDataList.removeAll()
         await openSpanCoreService.clearCache()
         await fetchAllBreedsAndImages()
     }
     
     @MainActor func deleteBreeds() {
-        self.breedImagesList.removeAll()
-        self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
+        self.cardDataList.removeAll()
+        self.breedImageProvider?.updateCardImagesList(self.cardDataList)
     }
     
     // MARK: - Private Methods
     
     private func resetState() async {
         DispatchQueue.main.async {
-            self.breedImagesList.removeAll()
+            self.cardDataList.removeAll()
             self.isLoading = true
             self.errorMessage = nil
         }
@@ -73,11 +72,11 @@ class DogBreedsViewModel: ObservableObject {
     private func updateBreeds(_ breeds: [BreedInfo]) async {
         DispatchQueue.main.async {
             self.breeds = breeds
-            self.breedImagesList = breeds.map {
+            self.cardDataList = breeds.map {
                 CardData(id: $0.name ?? "", name: $0.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!)
             }
-            self.breedImagesList.sort(by: { $0.name < $1.name })
-            self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
+            self.cardDataList.sort(by: { $0.name < $1.name })
+            self.breedImageProvider?.updateCardImagesList(self.cardDataList)
         }
     }
     
@@ -125,8 +124,8 @@ class DogBreedsViewModel: ObservableObject {
     private func updateBreedImages(_ breedImages: [CardData]) async {
         let sortedData = breedImages.sorted(by: { $0.name < $1.name })
         DispatchQueue.main.async {
-            self.breedImagesList = sortedData
-            self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
+            self.cardDataList = sortedData
+            self.breedImageProvider?.updateCardImagesList(self.cardDataList)
             self.isLoading = false
         }
     }
