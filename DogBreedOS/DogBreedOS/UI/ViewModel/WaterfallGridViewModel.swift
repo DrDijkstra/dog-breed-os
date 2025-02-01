@@ -9,12 +9,12 @@
 import UIKit
 import Combine
 
-protocol BreedImageProvider: AnyObject {
-   func updateBreedImagesList(_ breedImages: [CardData])
+protocol CardImageProvider: AnyObject {
+   func updateCardImagesList(_ breedImages: [CardData])
 }
 
-class WaterfallGridViewModel: ObservableObject , BreedImageProvider{
-    func updateBreedImagesList(_ breedImages: [CardData]) {
+class WaterfallGridViewModel: ObservableObject , CardImageProvider{
+    func updateCardImagesList(_ breedImages: [CardData]) {
         updateColumns(with: breedImages)
     }
     

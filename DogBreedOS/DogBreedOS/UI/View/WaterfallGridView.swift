@@ -42,7 +42,7 @@ struct WaterfallGridView: View {
     ]
     
     let model = WaterfallGridViewModel(numberOfColumns: 2)
-    model.updateBreedImagesList(breedImagesList) // Ensure the model has data before passing it
+    model.updateCardImagesList(breedImagesList) // Ensure the model has data before passing it
     return WaterfallGridView(viewModel: model)
 }
 

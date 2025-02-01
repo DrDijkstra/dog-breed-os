@@ -22,10 +22,10 @@ class DogBreedsViewModel: ObservableObject {
     // MARK: - Dependencies
     private let openSpanCoreService: OpenSpanCoreService!
     
-    weak var breedImageProvider: BreedImageProvider?
+    weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
-    init(openSpanCoreService: OpenSpanCoreService, breedImageProvider: BreedImageProvider?) {
+    init(openSpanCoreService: OpenSpanCoreService, breedImageProvider: CardImageProvider?) {
            self.openSpanCoreService = openSpanCoreService
            self.breedImageProvider = breedImageProvider
        }
@@ -45,7 +45,7 @@ class DogBreedsViewModel: ObservableObject {
                     self.breedImagesList.append(CardData(id: breed.name ?? "", name: breed.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!))
                 }
                 self.breedImagesList.sort(by: {$0.name < $1.name})
-                self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
+                self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
                 self.isLoading = false
             }
             
@@ -93,7 +93,7 @@ class DogBreedsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.breedImagesList = finalImages
                 self.breedImagesList.sort(by: {$0.name < $1.name})
-                self.breedImageProvider?.updateBreedImagesList(self.breedImagesList)
+                self.breedImageProvider?.updateCardImagesList(self.breedImagesList)
             }
             
         } catch {

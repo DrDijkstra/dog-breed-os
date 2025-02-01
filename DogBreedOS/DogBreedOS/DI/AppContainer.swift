@@ -29,14 +29,14 @@ class AppContainer {
         }
         .inObjectScope(.container)
         
-        container.register(BreedImageProvider.self) { resolver in
+        container.register(CardImageProvider.self) { resolver in
             return self.resolve(WaterfallGridViewModel.self)!
         }
         .inObjectScope(.transient)
         
         container.register(DogBreedsViewModel.self) { resolver in
             let openSpanCoreService = resolver.resolve(OpenSpanCoreService.self)!
-            let breedImageProvider = resolver.resolve(BreedImageProvider.self)!
+            let breedImageProvider = resolver.resolve(CardImageProvider.self)!
             let model = DogBreedsViewModel(openSpanCoreService: openSpanCoreService, breedImageProvider: breedImageProvider)
             return model
         }
