@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import OpenspanCore
+import UIKit
 
 class ImageCacheServiceTests: XCTestCase {
     var imageCacheService: ImageCacheService!
@@ -28,64 +29,54 @@ class ImageCacheServiceTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCacheImage_StoresInBothMemoryAndDisk() {
+    func testCacheImage_StoresInBothMemoryAndDisk() async {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
-        var memoryCacheImage: UIImage?
-        var diskCacheImage: UIImage?
-        Task {
-            await imageCacheService.cacheImage(testImage, forKey: key)
-            memoryCacheImage = await memoryCacheService.getImage(forKey: key)
-            diskCacheImage = await diskCacheService.getImage(forKey: key)
-        }
+        
+        await imageCacheService.cacheImage(testImage, forKey: key)
+        
+        let memoryCacheImage = await memoryCacheService.getImage(forKey: key)
+        let diskCacheImage = await diskCacheService.getImage(forKey: key)
+        
         XCTAssertNotNil(memoryCacheImage)
         XCTAssertNotNil(diskCacheImage)
     }
     
-    func testGetImage_RetrievesFromMemoryFirst() {
+    func testGetImage_RetrievesFromMemoryFirst() async {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
-        var retrievedImage: UIImage?
-        Task {
-            await memoryCacheService.cacheImage(testImage, forKey: key)
-            retrievedImage = await imageCacheService.getImage(forKey: key)
-        }
-        XCTAssertEqual(retrievedImage, testImage)
+        
+        await memoryCacheService.cacheImage(testImage, forKey: key)
+        let retrievedImage = await imageCacheService.getImage(forKey: key)
+        
+        XCTAssertEqual(retrievedImage?.pngData(), testImage.pngData())
     }
     
-    func testGetImage_RetrievesFromDiskIfNotInMemory() {
+    func testGetImage_RetrievesFromDiskIfNotInMemory() async {
         let bundle = Bundle.module
-        let testImage = UIImage(named: "Hello_World",
-                               in: bundle,
-                               compatibleWith: nil)!
+        let testImage = UIImage(named: "Hello_World", in: bundle, compatibleWith: nil)!
         let key = "testKey"
-        var retrievedImageFromImageCache: UIImage?
-        var retrievedImageFromMemory: UIImage?
-        Task {
-            await diskCacheService.cacheImage(testImage, forKey: key)
-            
-            retrievedImageFromImageCache = await imageCacheService.getImage(forKey: key)
-            let retrievedImageFromMemory = await memoryCacheService.getImage(forKey: key)
-        }
-        XCTAssertEqual(retrievedImageFromImageCache, retrievedImageFromMemory)
+        
+        await diskCacheService.cacheImage(testImage, forKey: key)
+        
+        let retrievedImageFromImageCache = await imageCacheService.getImage(forKey: key)
+        let retrievedImageFromMemory = await memoryCacheService.getImage(forKey: key)
+        
+        XCTAssertEqual(retrievedImageFromImageCache?.pngData(), retrievedImageFromMemory?.pngData())
         XCTAssertNotNil(retrievedImageFromMemory) // Ensures it was added to memory cache
     }
     
-    func testClearCache_ClearsBothMemoryAndDisk() {
+    func testClearCache_ClearsBothMemoryAndDisk() async {
         let testImage = UIImage(systemName: "star")!
         let key = "testKey"
         
-        var imageFromDisk: UIImage?
-        var imageFromMemory: UIImage?
+        await imageCacheService.cacheImage(testImage, forKey: key)
+        await imageCacheService.clearCache()
         
-        Task {
-            await imageCacheService.cacheImage(testImage, forKey: key)
-            await imageCacheService.clearCache()
-            imageFromDisk = await memoryCacheService.getImage(forKey: key)
-            imageFromMemory = await diskCacheService.getImage(forKey: key)
-        }
+        let imageFromMemory = await memoryCacheService.getImage(forKey: key)
+        let imageFromDisk = await diskCacheService.getImage(forKey: key)
         
-        XCTAssertNil(imageFromDisk)
         XCTAssertNil(imageFromMemory)
+        XCTAssertNil(imageFromDisk)
     }
 }

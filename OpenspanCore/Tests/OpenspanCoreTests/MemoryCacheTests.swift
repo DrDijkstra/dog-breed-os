@@ -11,7 +11,7 @@ import XCTest
 import UIKit
 
 final class MemoryCacheTests: XCTestCase {
-    var memoryCache: MemoryCache!
+    var memoryCache: MemoryCacheService!
 
     override func setUp() {
         super.setUp()
@@ -19,9 +19,6 @@ final class MemoryCacheTests: XCTestCase {
     }
 
     override func tearDown() {
-        Task {
-            await memoryCache.clearCache()
-        }
         memoryCache = nil
         super.tearDown()
     }
