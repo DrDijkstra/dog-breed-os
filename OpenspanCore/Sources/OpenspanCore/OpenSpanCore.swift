@@ -14,8 +14,8 @@ public class OpenSpanCore {
         
     }
     
-    public func initializeSDK (baseUrl: String) {
-        SDKContainer.shared.injectDependency(baseUrl: baseUrl)
+    public func initializeSDK (baseUrl: String, appID: String) {
+        SDKContainer.shared.injectDependency(baseUrl: baseUrl, appID: appID)
         openSpanCoreService = SDKContainer.shared.resolve(OpenSpanCoreService.self)
     }
 }

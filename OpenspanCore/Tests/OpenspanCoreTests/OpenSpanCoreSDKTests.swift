@@ -20,7 +20,7 @@ final class OpenSpanCoreTests: XCTestCase {
         
         // Initialize the SDK with a valid baseUrl (e.g., a test API endpoint)
         let testBaseUrl = "https://dog.ceo/api/"
-        openSpanCore.initializeSDK(baseUrl: testBaseUrl)
+        openSpanCore.initializeSDK(baseUrl: testBaseUrl, appID: "test")
     }
     
     override func tearDown() {
@@ -28,7 +28,7 @@ final class OpenSpanCoreTests: XCTestCase {
         
         // Reset the SDKContainer to its original state
         SDKContainer.shared.container.removeAll()
-        SDKContainer.shared.injectDependency(baseUrl: "") // Reinitialize with empty baseUrl
+        SDKContainer.shared.injectDependency(baseUrl: "", appID: "test") // Reinitialize with empty baseUrl
         super.tearDown()
     }
     
@@ -38,7 +38,7 @@ final class OpenSpanCoreTests: XCTestCase {
         let baseUrl = "https://api.example.com"
         
         // Act
-        openSpanCore.initializeSDK(baseUrl: baseUrl)
+        openSpanCore.initializeSDK(baseUrl: baseUrl, appID: "test")
         
         // Assert
         XCTAssertNotNil(openSpanCore.openSpanCoreService, "Expected OpenSpanCoreService to be initialized")

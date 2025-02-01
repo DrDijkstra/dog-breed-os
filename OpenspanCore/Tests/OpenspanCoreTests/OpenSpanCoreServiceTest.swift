@@ -17,7 +17,11 @@ final class OpenSpanCoreServiceImplTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockBreedService = MockBreedService()
-        openSpanCoreService = OpenSpanCoreServiceImpl(breedService: mockBreedService)
+        let memoryCacheService = MemoryCache()
+        let diskCacheService = DiskCache(cacheDirectoryString: "Test")
+        let imageCacheService = ImageCacheService(memoryCacheService: memoryCacheService, diskCacheService: diskCacheService)
+        openSpanCoreService = OpenSpanCoreServiceImpl(breedService: mockBreedService, imageCacheService: imageCacheService)
+        
     }
     
     override func tearDown() {
@@ -100,6 +104,48 @@ final class OpenSpanCoreServiceImplTests: XCTestCase {
             XCTAssertEqual(error as NSError, expectedError, "Expected error to match mock error")
         }
     }
+    
+    // Test getImage(forKey:) when image exists in cache
+    func testGetImage_WhenImageExists() {
+        let key = "testKey"
+        let expectedImage = UIImage()
+        openSpanCoreService.cacheImage(expectedImage, forKey: key)
+
+        let retrievedImage = openSpanCoreService.getImage(forKey: key)
+
+        XCTAssertNotNil(retrievedImage, "Expected to retrieve an image from cache")
+        XCTAssertEqual(retrievedImage, expectedImage, "Retrieved image should match expected image")
+    }
+       
+       // Test getImage(forKey:) when image does not exist in cache
+       func testGetImage_WhenImageDoesNotExist() {
+           let key = "nonExistentKey"
+           
+           let retrievedImage = openSpanCoreService.getImage(forKey: key)
+           
+           XCTAssertNil(retrievedImage, "Expected nil when image does not exist in cache")
+       }
+       
+       // Test cacheImage(_:forKey:)
+       func testCacheImage() {
+           let key = "testKey"
+           let imageToCache = UIImage()
+           
+           openSpanCoreService.cacheImage(imageToCache, forKey: key)
+           
+           XCTAssertEqual(openSpanCoreService.getImage(forKey: key), imageToCache, "Expected image to be stored in cache")
+       }
+       
+       // Test clearCache()
+       func testClearCache() {
+           let key = "testKey"
+           let image = UIImage()
+           openSpanCoreService.cacheImage(image, forKey: key)
+           
+           openSpanCoreService.clearCache()
+           
+           XCTAssertNil(openSpanCoreService.getImage(forKey: key), "Expected cache to be empty after clearing")
+       }
 }
 
 

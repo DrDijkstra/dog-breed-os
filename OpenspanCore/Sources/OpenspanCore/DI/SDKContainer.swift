@@ -15,13 +15,15 @@ class SDKContainer {
     
     let container = Container()
     private var baseUrl: String = ""
+    private var appID: String = ""
     
     private init() {
         
     }
     
-    func injectDependency(baseUrl: String)  {
+    func injectDependency(baseUrl: String, appID: String)  {
         self.baseUrl = baseUrl
+        self.appID = appID
         registerServices()
     }
 
@@ -38,8 +40,21 @@ class SDKContainer {
             BreedServiceImpl(apiService:  self.resolve(ApiService.self))
         }
         .inObjectScope(.container)
+        container.register(MemoryCacheService.self) { _ in
+            MemoryCache()
+        }
+        .inObjectScope(.container)
+        container.register(DiskCacheService.self) { _ in
+            DiskCache(cacheDirectoryString: self.appID)
+        }
+        .inObjectScope(.container)
+        container.register(ImageCacheService.self) { _ in
+            ImageCacheService(memoryCacheService: self.resolve(MemoryCacheService.self), diskCacheService: self.resolve(DiskCacheService.self))
+        }
+        .inObjectScope(.container)
+
         container.register(OpenSpanCoreService.self) { _ in
-            OpenSpanCoreServiceImpl(breedService: self.resolve(BreedService.self))
+            OpenSpanCoreServiceImpl(breedService: self.resolve(BreedService.self), imageCacheService: self.resolve(ImageCacheService.self))
         }
         .inObjectScope(.container)
         

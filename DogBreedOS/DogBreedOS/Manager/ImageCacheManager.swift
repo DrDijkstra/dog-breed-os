@@ -44,14 +44,17 @@ class ImageCacheManager {
     
     // MARK: - Disk Cache
     func cacheImageToDisk(_ image: UIImage, forKey key: String) {
-        let fileURL = cacheDirectory.appendingPathComponent(key)
+        let hashedKey = key.sha256()
+        let fileURL = cacheDirectory.appendingPathComponent(hashedKey)
         if let data = image.pngData() {
+            let pngImage = UIImage(data: data)
             try? data.write(to: fileURL)
         }
     }
-    
+
     func getImageFromDiskCache(forKey key: String) -> UIImage? {
-        let fileURL = cacheDirectory.appendingPathComponent(key)
+        let hashedKey = key.sha256() // Use the same hashing function to generate the filename
+        let fileURL = cacheDirectory.appendingPathComponent(hashedKey)
         if let data = try? Data(contentsOf: fileURL) {
             return UIImage(data: data)
         }
