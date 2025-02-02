@@ -15,6 +15,8 @@ public class BreedInfo: Equatable {
         self.subBreeds = subBreeds
     }
     
+    // MARK: - Equatable Conformance
+    
     public static func == (lhs: BreedInfo, rhs: BreedInfo) -> Bool {
         guard lhs.name == rhs.name else {
             return false
