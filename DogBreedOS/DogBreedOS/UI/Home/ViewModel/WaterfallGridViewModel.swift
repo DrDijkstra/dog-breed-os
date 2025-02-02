@@ -72,5 +72,4 @@ class WaterfallGridViewModel: ObservableObject, CardImageProvider {
         let aspectRatio = image.size.height / image.size.width
         return imageWidth * aspectRatio
     }
-    
 }
