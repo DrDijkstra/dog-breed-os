@@ -31,18 +31,19 @@ struct WaterfallGridView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     let breedImagesList: [CardData] = [
-        CardData(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!, isImageLoaded: true),
-        CardData(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        CardData(id: "3", name: "Labrador", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!),
-        CardData(id: "4", name: "Poodle", image: UIImage(named: "appstore") ?? UIImage(systemName: "photo")!, isImageLoaded: true),
-        CardData(id: "5", name: "Beagle", image: UIImage(named: "appstore") ?? UIImage(systemName: "photo")!,  isImageLoaded: true),
-        CardData(id: "6", name: "Rottweiler", image: UIImage(named: "placeholder_image") ?? UIImage(systemName: "photo")!)
+        CardData(id: "1", name: "Golden Retriever", image: UIImage(named: "placeholder_image")!, isImageLoaded: true),
+        CardData(id: "2", name: "Bulldog", image: UIImage(named: "placeholder_image")!),
+        CardData(id: "3", name: "Labrador", image: UIImage(named: "placeholder_image")!),
+        CardData(id: "4", name: "Poodle", image: UIImage(named: "appstore")!, isImageLoaded: true),
+        CardData(id: "5", name: "Beagle", image: UIImage(named: "appstore")!),
+        CardData(id: "6", name: "Rottweiler", image: UIImage(named: "placeholder_image")!)
     ]
     
-    let model = WaterfallGridViewModel(numberOfColumns: 2)
-    model.updateCardImagesList(breedImagesList) // Ensure the model has data before passing it
-    return WaterfallGridView(viewModel: model)
+    let viewModel = WaterfallGridViewModel(numberOfColumns: 2)
+    viewModel.updateCardImagesList(breedImagesList)
+    
+    return WaterfallGridView(viewModel: viewModel)
 }
-

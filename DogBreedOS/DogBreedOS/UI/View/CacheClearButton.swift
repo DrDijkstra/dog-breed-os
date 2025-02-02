@@ -8,19 +8,17 @@
 import SwiftUI
 
 struct CacheClearButton: View {
-    
     var action: () -> Void
     
     var body: some View {
-        Button(action: {
-            action()
-        }) {
+        Button(action: action) {
             Image(systemName: "arrow.clockwise")
                 .font(.headline)
         }
     }
 }
 
+// MARK: - Preview
 #Preview {
     CacheClearButton(action: ({}))
 }

@@ -4,7 +4,6 @@
 //
 //  Created by Sanjay Dey on 2025-01-30.
 //
-
 import SwiftUI
 import OpenspanCore
 
@@ -13,7 +12,7 @@ struct CardView: View {
     let imageWidth: CGFloat
     
     @State private var imageHeight: CGFloat = 0
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack {
@@ -25,9 +24,7 @@ struct CardView: View {
                     .frame(width: imageWidth, height: calculatedHeight)
                     .cornerRadius(8)
                     .onAppear {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            imageHeight = calculatedHeight
-                        }
+                        animateImageHeight(to: calculatedHeight)
                     }
             } else {
                 Image(uiImage: cardData.image)
@@ -38,9 +35,7 @@ struct CardView: View {
                     .cornerRadius(8)
                     .opacity(imageHeight > 0 ? 1 : 0)
                     .onAppear {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            imageHeight = calculatedHeight
-                        }
+                        animateImageHeight(to: calculatedHeight)
                     }
             }
             
@@ -52,18 +47,27 @@ struct CardView: View {
                 .foregroundColor(colorScheme == .dark ? .white : .black)
         }
         .padding(12)
-        .background(colorScheme == .dark ? Color(.systemGray5) : Color.white)
+        .background(colorScheme == .dark ? Color(.systemGray5) : .white)
         .cornerRadius(12)
         .shadow(radius: 5)
         .frame(width: imageWidth)
     }
+    
+    // MARK: - Helper Methods
+    
+    private func animateImageHeight(to height: CGFloat) {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            imageHeight = height
+        }
+    }
 }
 
+// MARK: - Preview
 #Preview {
     let image = CardData(
         id: "1",
         name: "Golden Retriever",
         image: UIImage(named: "placeholder_image")!
     )
-    CardView(cardData: image, imageWidth: 250)
+    return CardView(cardData: image, imageWidth: 250)
 }

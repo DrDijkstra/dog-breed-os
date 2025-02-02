@@ -25,6 +25,7 @@ struct ShimmeringView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     ShimmeringView()
 }
