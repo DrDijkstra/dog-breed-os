@@ -55,7 +55,6 @@
 				CommonUI/ShimmeringView.swift,
 				DI/AppContainer.swift,
 				DogBreedOSApp.swift,
-				"Extension/View+Extension.swift",
 				UI/Home/Model/CardData.swift,
 				UI/Home/View/DogBreedsView.swift,
 				UI/Home/View/WaterfallGridView.swift,

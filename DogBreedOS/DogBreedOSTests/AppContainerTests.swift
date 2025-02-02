@@ -50,6 +50,6 @@ class AppContainerTests: XCTestCase {
     func testResolveDependenciesInDogBreedsViewModel() {
         let viewModel: DogBreedsViewModel? = appContainer.resolve(DogBreedsViewModel.self)
         XCTAssertNotNil(viewModel?.interactor, "OpenSpanCoreInteractor should be injected into DogBreedsViewModel.")
-        XCTAssertNotNil(viewModel?.breedImageProvider, "CardImageProvider should be injected into DogBreedsViewModel.")
+        XCTAssertNotNil(viewModel?.cardImageProvider, "CardImageProvider should be injected into DogBreedsViewModel.")
     }
 }

@@ -18,13 +18,13 @@ class DogBreedsViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
-    private let interactor: OneSpanCoreInteractor
-    private weak var breedImageProvider: CardImageProvider?
+    let interactor: OneSpanCoreInteractor
+    weak var cardImageProvider: CardImageProvider?
     
     // MARK: - Initializer
     init(interactor: OneSpanCoreInteractor, cardImageProvider: CardImageProvider?) {
         self.interactor = interactor
-        self.breedImageProvider = cardImageProvider
+        self.cardImageProvider = cardImageProvider
     }
     
     // MARK: - Public Methods
@@ -50,7 +50,7 @@ class DogBreedsViewModel: ObservableObject {
     
     @MainActor func deleteBreeds() {
         cardDataList.removeAll()
-        breedImageProvider?.updateCardImagesList(cardDataList)
+        cardImageProvider?.updateCardImagesList(cardDataList)
     }
     
     // MARK: - Private Methods
@@ -73,7 +73,7 @@ class DogBreedsViewModel: ObservableObject {
             self.cardDataList = breeds.map {
                 CardData(id: $0.name ?? "", name: $0.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!)
             }
-            breedImageProvider?.updateCardImagesList(cardDataList)
+            cardImageProvider?.updateCardImagesList(cardDataList)
         }
     }
     
@@ -130,7 +130,7 @@ class DogBreedsViewModel: ObservableObject {
     private func updateBreedImages(_ breedImages: [CardData]) async {
         await MainActor.run {
             self.cardDataList = breedImages
-            self.breedImageProvider?.updateCardImagesList(cardDataList)
+            self.cardImageProvider?.updateCardImagesList(cardDataList)
             self.isLoading = false
         }
     }
