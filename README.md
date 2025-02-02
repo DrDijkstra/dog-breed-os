@@ -5,7 +5,9 @@
 
 Welcome to the **Dog Breed** project! This project is designed to display images of all dog breeds randomly in an iOS app. To achieve this, we are collecting data from the [Dog CEO](https://dog.ceo/dog-api/) API and storing it in a cache for efficient access. The project is built using **SwiftUI**, follows the **MVVM (Model-View-ViewModel)** architecture, and leverages **Alamofire** for networking and **Swinject** for dependency injection. The architecture is divided into two main layers: **App Layer** and **Network Layer**.
 
-<img src="./Resources/demo.gif" alt="Project Demo" height="250" />
+<div style="width: 50%; height: auto; display: flex; justify-content: center;">
+  <img src="./Resources/demo.gif" alt="Project Demo" style="width: 100%; height: auto;">
+</div>
 
 ---
 
