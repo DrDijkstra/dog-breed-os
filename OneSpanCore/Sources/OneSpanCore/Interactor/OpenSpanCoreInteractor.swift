@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol OpenSpanCoreInteractor {
+public protocol OneSpanCoreInteractor {
     func getBreedList() async throws -> [BreedInfo]
     func getRandomBreedPhoto(request: BreedImageInfoRequest) async throws -> BreedImageInfoResponse
     func getImage(forKey key: String) async -> UIImage?
@@ -15,7 +15,7 @@ public protocol OpenSpanCoreInteractor {
     func clearCache() async
 }
 
-class OpenSpanCoreInteractorImpl: OpenSpanCoreInteractor {
+class OneSpanCoreInteractorImpl: OneSpanCoreInteractor {
     
     let breedService:BreedService
     let imageCacheService:ImageCacheService

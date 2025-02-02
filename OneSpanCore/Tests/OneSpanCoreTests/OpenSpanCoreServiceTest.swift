@@ -7,11 +7,11 @@
 
 
 import XCTest
-@testable import OpenspanCore
+@testable import OneSpanCore
 
 final class openSpanCoreInteractorImplTests: XCTestCase {
     
-    var openSpanCoreInteractor: OpenSpanCoreInteractorImpl!
+    var oneSpanCoreInteractor: OneSpanCoreInteractorImpl!
     var mockBreedService: MockBreedService!
     
     override func setUp() {
@@ -20,11 +20,11 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
         let memoryCache = MemoryCacheRepositoryImpl()
         let diskCache = UserDefaultsImageCacheRepositoryImpl()
         let imageCacheService = ImageCacheService(memoryCacheRepository: memoryCache, diskCacheRepository: diskCache)
-        openSpanCoreInteractor = OpenSpanCoreInteractorImpl(breedService: mockBreedService, imageCacheService: imageCacheService)
+        oneSpanCoreInteractor = OneSpanCoreInteractorImpl(breedService: mockBreedService, imageCacheService: imageCacheService)
     }
     
     override func tearDown() {
-        openSpanCoreInteractor = nil
+        oneSpanCoreInteractor = nil
         mockBreedService = nil
         super.tearDown()
     }
@@ -40,7 +40,7 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
         
         do {
             // Act
-            let breeds = try await openSpanCoreInteractor.getBreedList()
+            let breeds = try await oneSpanCoreInteractor.getBreedList()
             
             // Assert
             XCTAssertEqual(breeds, expectedBreeds, "Expected breeds to match mock data")
@@ -57,7 +57,7 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
         
         do {
             // Act
-            _ = try await openSpanCoreInteractor.getBreedList()
+            _ = try await oneSpanCoreInteractor.getBreedList()
             
             // Assert
             XCTFail("Expected an error to be thrown")
@@ -76,7 +76,7 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
         
         do {
             // Act
-            let response = try await openSpanCoreInteractor.getRandomBreedPhoto(request: request)
+            let response = try await oneSpanCoreInteractor.getRandomBreedPhoto(request: request)
             
             // Assert
             XCTAssertEqual(response, expectedResponse, "Expected response to match mock data")
@@ -94,7 +94,7 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
         
         do {
             // Act
-            _ = try await openSpanCoreInteractor.getRandomBreedPhoto(request: request)
+            _ = try await oneSpanCoreInteractor.getRandomBreedPhoto(request: request)
             
             // Assert
             XCTFail("Expected an error to be thrown")
@@ -108,9 +108,9 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
     func testGetImage_WhenImageExists() async {
         let key = "testKey"
         let expectedImage = UIImage()
-        await openSpanCoreInteractor.cacheImage(expectedImage, forKey: key)
+        await oneSpanCoreInteractor.cacheImage(expectedImage, forKey: key)
 
-        let retrievedImage = await openSpanCoreInteractor.getImage(forKey: key)
+        let retrievedImage = await oneSpanCoreInteractor.getImage(forKey: key)
 
         XCTAssertNotNil(retrievedImage, "Expected to retrieve an image from cache")
         XCTAssertEqual(retrievedImage, expectedImage, "Retrieved image should match expected image")
@@ -120,7 +120,7 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
     func testGetImage_WhenImageDoesNotExist() async {
         let key = "nonExistentKey"
            
-        let retrievedImage = await openSpanCoreInteractor.getImage(forKey: key)
+        let retrievedImage = await oneSpanCoreInteractor.getImage(forKey: key)
            
         XCTAssertNil(retrievedImage, "Expected nil when image does not exist in cache")
     }
@@ -130,9 +130,9 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
         let key = "testKey"
         let imageToCache = UIImage()
            
-        await openSpanCoreInteractor.cacheImage(imageToCache, forKey: key)
+        await oneSpanCoreInteractor.cacheImage(imageToCache, forKey: key)
            
-        let retrievedImage = await openSpanCoreInteractor.getImage(forKey: key)
+        let retrievedImage = await oneSpanCoreInteractor.getImage(forKey: key)
         XCTAssertEqual(retrievedImage, imageToCache, "Expected image to be stored in cache")
     }
        
@@ -140,11 +140,11 @@ final class openSpanCoreInteractorImplTests: XCTestCase {
     func testClearCache() async {
         let key = "testKey"
         let image = UIImage()
-        await openSpanCoreInteractor.cacheImage(image, forKey: key)
+        await oneSpanCoreInteractor.cacheImage(image, forKey: key)
            
-        await openSpanCoreInteractor.clearCache()
+        await oneSpanCoreInteractor.clearCache()
            
-        let retrievedImage = await openSpanCoreInteractor.getImage(forKey: key)
+        let retrievedImage = await oneSpanCoreInteractor.getImage(forKey: key)
         XCTAssertNil(retrievedImage, "Expected cache to be empty after clearing")
     }
 }

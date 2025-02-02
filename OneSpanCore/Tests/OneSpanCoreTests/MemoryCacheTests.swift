@@ -7,7 +7,7 @@
 
 
 import XCTest
-@testable import OpenspanCore
+@testable import OneSpanCore
 import UIKit
 
 final class MemoryCacheTests: XCTestCase {

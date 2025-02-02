@@ -8,7 +8,7 @@
 
 import XCTest
 import Alamofire
-@testable import OpenspanCore
+@testable import OneSpanCore
 
 final class ApiServiceTests: XCTestCase {
 

@@ -7,16 +7,16 @@
 
 
 import XCTest
-@testable import OpenspanCore
+@testable import OneSpanCore
 import Swinject
 
 final class OpenSpanCoreTests: XCTestCase {
     
-    var openSpanCore: OpenSpanCore!
+    var openSpanCore: OneSpanCore!
     
     override func setUp() {
         super.setUp()
-        openSpanCore = OpenSpanCore.shared
+        openSpanCore = OneSpanCore.shared
         
         // Initialize the SDK with a valid baseUrl (e.g., a test API endpoint)
         let testBaseUrl = "https://dog.ceo/api/"

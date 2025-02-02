@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "OpenspanCore",
+    name: "OneSpanCore",
     platforms: [
         .iOS(.v13),
         .macOS(.v10_15),
@@ -11,8 +11,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "OpenspanCore",
-            targets: ["OpenspanCore"]),
+            name: "OneSpanCore",
+            targets: ["OneSpanCore"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.8.0"),
@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "OpenspanCore",
+            name: "OneSpanCore",
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "Swinject", package: "Swinject")
@@ -28,9 +28,9 @@ let package = Package(
             resources: [.process("CoreResources")]
         ),
         .testTarget(
-            name: "OpenspanCoreTests",
-            dependencies: ["OpenspanCore"],
-            resources: [.copy("CoreResources")]
+            name: "OneSpanCoreTests",
+            dependencies: ["OneSpanCore"],
+            resources: [.copy("OneSpanCore")]
         ),
     ]
 )

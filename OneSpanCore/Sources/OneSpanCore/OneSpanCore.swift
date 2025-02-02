@@ -5,11 +5,11 @@
 //  Created by Sanjay Dey on 2025-01-29.
 //
 
-public class OpenSpanCore {
+public class OneSpanCore {
     
-    public static let shared = OpenSpanCore()
+    public static let shared = OneSpanCore()
     
-    public var openSpanCoreInteractor: OpenSpanCoreInteractor?
+    public var openSpanCoreInteractor: OneSpanCoreInteractor?
      
     private init() {
         
@@ -17,6 +17,6 @@ public class OpenSpanCore {
     
     public func initializeSDK (baseUrl: String) {
         SDKContainer.shared.injectDependency(baseUrl: baseUrl)
-        openSpanCoreInteractor = SDKContainer.shared.resolve(OpenSpanCoreInteractor.self)
+        openSpanCoreInteractor = SDKContainer.shared.resolve(OneSpanCoreInteractor.self)
     }
 }

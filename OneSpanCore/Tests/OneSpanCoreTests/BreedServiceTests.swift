@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import OpenspanCore
+@testable import OneSpanCore
 
 final class BreedServiceTests: XCTestCase {
     var breedService: BreedServiceImpl!

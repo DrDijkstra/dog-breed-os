@@ -51,8 +51,8 @@ class SDKContainer {
         }
         .inObjectScope(.container)
 
-        container.register(OpenSpanCoreInteractor.self) { _ in
-            OpenSpanCoreInteractorImpl(breedService: self.resolve(BreedService.self), imageCacheService: self.resolve(ImageCacheService.self))
+        container.register(OneSpanCoreInteractor.self) { _ in
+            OneSpanCoreInteractorImpl(breedService: self.resolve(BreedService.self), imageCacheService: self.resolve(ImageCacheService.self))
         }
         .inObjectScope(.container)
         
