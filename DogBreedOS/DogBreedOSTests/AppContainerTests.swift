@@ -8,7 +8,7 @@
 
 import XCTest
 import Swinject
-import OpenspanCore
+import OneSpanCore
 @testable import DogBreedOS
 
 class AppContainerTests: XCTestCase {
@@ -28,7 +28,7 @@ class AppContainerTests: XCTestCase {
     // MARK: - Tests
     
     func testResolveOpenSpanCoreService() {
-        let service: OpenSpanCoreInteractor? = appContainer.resolve(OpenSpanCoreInteractor.self)
+        let service: OneSpanCoreInteractor? = appContainer.resolve(OneSpanCoreInteractor.self)
         XCTAssertNotNil(service, "OpenSpanCoreService should be resolved successfully.")
     }
     

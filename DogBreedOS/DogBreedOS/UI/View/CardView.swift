@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import OpenspanCore
+import OneSpanCore
 
 struct CardView: View {
     let cardData: CardData

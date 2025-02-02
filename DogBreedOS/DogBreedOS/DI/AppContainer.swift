@@ -7,7 +7,7 @@
 
 import Foundation
 import Swinject
-import OpenspanCore
+import OneSpanCore
 
 class AppContainer {
     static let shared: AppContainer = .init()
@@ -19,8 +19,8 @@ class AppContainer {
     
     private func registerServices() {
 
-        container.register(OpenSpanCoreInteractor.self) { _ in
-            return OpenSpanCore.shared.openSpanCoreInteractor!
+        container.register(OneSpanCoreInteractor.self) { _ in
+            return OneSpanCore.shared.oneSpanCoreInteractor!
         }
         .inObjectScope(.container)
         
@@ -35,7 +35,7 @@ class AppContainer {
         .inObjectScope(.transient)
         
         container.register(DogBreedsViewModel.self) { resolver in
-            let interactor = resolver.resolve(OpenSpanCoreInteractor.self)!
+            let interactor = resolver.resolve(OneSpanCoreInteractor.self)!
             let cardImageProvider = resolver.resolve(CardImageProvider.self)!
             let model = DogBreedsViewModel(interactor: interactor, cardImageProvider: cardImageProvider)
             return model

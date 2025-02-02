@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import OpenspanCore
+import OneSpanCore
 import UIKit
 
 class DogBreedsViewModel: ObservableObject {
@@ -19,11 +19,11 @@ class DogBreedsViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
-    let interactor: OpenSpanCoreInteractor!
+    let interactor: OneSpanCoreInteractor!
     weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
-    init(interactor: OpenSpanCoreInteractor, cardImageProvider: CardImageProvider?) {
+    init(interactor: OneSpanCoreInteractor, cardImageProvider: CardImageProvider?) {
         self.interactor = interactor
         self.breedImageProvider = cardImageProvider
     }

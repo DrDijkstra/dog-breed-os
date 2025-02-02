@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import OpenspanCore
+import OneSpanCore
 
 @main
 struct DogBreedOSApp: App {
@@ -36,6 +36,6 @@ struct DogBreedOSApp: App {
             return
         }
         
-        OpenSpanCore.shared.initializeSDK(baseUrl: baseUrl)
+        OneSpanCore.shared.initializeSDK(baseUrl: baseUrl)
     }
 }

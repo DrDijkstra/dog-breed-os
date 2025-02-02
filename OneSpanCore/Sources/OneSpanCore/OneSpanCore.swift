@@ -9,7 +9,7 @@ public class OneSpanCore {
     
     public static let shared = OneSpanCore()
     
-    public var openSpanCoreInteractor: OneSpanCoreInteractor?
+    public var oneSpanCoreInteractor: OneSpanCoreInteractor?
      
     private init() {
         
@@ -17,6 +17,6 @@ public class OneSpanCore {
     
     public func initializeSDK (baseUrl: String) {
         SDKContainer.shared.injectDependency(baseUrl: baseUrl)
-        openSpanCoreInteractor = SDKContainer.shared.resolve(OneSpanCoreInteractor.self)
+        oneSpanCoreInteractor = SDKContainer.shared.resolve(OneSpanCoreInteractor.self)
     }
 }

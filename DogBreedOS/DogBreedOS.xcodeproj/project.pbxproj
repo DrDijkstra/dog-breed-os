@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6AACE3172D4C6A2E007913B8 /* OpenspanCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6AACE3162D4C6A2E007913B8 /* OpenspanCore */; };
+		6AF4505C2D4FB2A000C55F14 /* OneSpanCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF4505B2D4FB2A000C55F14 /* OneSpanCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AACE3172D4C6A2E007913B8 /* OpenspanCore in Frameworks */,
+				6AF4505C2D4FB2A000C55F14 /* OneSpanCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +153,7 @@
 			);
 			name = DogBreedOS;
 			packageProductDependencies = (
-				6AACE3162D4C6A2E007913B8 /* OpenspanCore */,
+				6AF4505B2D4FB2A000C55F14 /* OneSpanCore */,
 			);
 			productName = DogBreedOS;
 			productReference = 6AACE2E12D4C6889007913B8 /* DogBreedOS.app */;
@@ -238,7 +238,7 @@
 			mainGroup = 6AACE2D82D4C6889007913B8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				6AACE3152D4C6A2E007913B8 /* XCLocalSwiftPackageReference "../OpenspanCore" */,
+				6AF4505A2D4FB2A000C55F14 /* XCLocalSwiftPackageReference "../OneSpanCore" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6AACE2E22D4C6889007913B8 /* Products */;
@@ -623,16 +623,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		6AACE3152D4C6A2E007913B8 /* XCLocalSwiftPackageReference "../OpenspanCore" */ = {
+		6AF4505A2D4FB2A000C55F14 /* XCLocalSwiftPackageReference "../OneSpanCore" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../OpenspanCore;
+			relativePath = ../OneSpanCore;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6AACE3162D4C6A2E007913B8 /* OpenspanCore */ = {
+		6AF4505B2D4FB2A000C55F14 /* OneSpanCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = OpenspanCore;
+			productName = OneSpanCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
