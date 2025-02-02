@@ -11,7 +11,6 @@ import OneSpanCore
 import UIKit
 
 class DogBreedsViewModel: ObservableObject {
-    
     // MARK: - Published Properties
     @Published var breeds: [BreedInfo] = []
     @Published var cardDataList: [CardData] = []
@@ -19,8 +18,8 @@ class DogBreedsViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
-    let interactor: OneSpanCoreInteractor!
-    weak var breedImageProvider: CardImageProvider?
+    private let interactor: OneSpanCoreInteractor
+    private weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
     init(interactor: OneSpanCoreInteractor, cardImageProvider: CardImageProvider?) {
@@ -38,7 +37,6 @@ class DogBreedsViewModel: ObservableObject {
             
             let breedImages = try await fetchImages(for: breeds)
             await updateBreedImages(breedImages)
-            
         } catch {
             await handleError(error)
         }
@@ -51,32 +49,31 @@ class DogBreedsViewModel: ObservableObject {
     }
     
     @MainActor func deleteBreeds() {
-        self.cardDataList.removeAll()
-        self.breedImageProvider?.updateCardImagesList(self.cardDataList)
+        cardDataList.removeAll()
+        breedImageProvider?.updateCardImagesList(cardDataList)
     }
     
     // MARK: - Private Methods
-    
     private func resetState() async {
-        DispatchQueue.main.async {
-            self.cardDataList.removeAll()
-            self.isLoading = true
-            self.errorMessage = nil
+        await MainActor.run {
+            cardDataList.removeAll()
+            isLoading = true
+            errorMessage = nil
         }
     }
     
     private func fetchBreeds() async throws -> [BreedInfo] {
-        return try await interactor.getBreedList()
+        let breeds = try await interactor.getBreedList()
+        return breeds.sorted { ($0.name ?? "") < ($1.name ?? "") }
     }
     
     private func updateBreeds(_ breeds: [BreedInfo]) async {
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.breeds = breeds
             self.cardDataList = breeds.map {
                 CardData(id: $0.name ?? "", name: $0.name?.capitalized ?? "", image: UIImage(named: "placeholder_image")!)
             }
-            self.cardDataList.sort(by: { $0.name < $1.name })
-            self.breedImageProvider?.updateCardImagesList(self.cardDataList)
+            breedImageProvider?.updateCardImagesList(cardDataList)
         }
     }
     
@@ -86,27 +83,20 @@ class DogBreedsViewModel: ObservableObject {
         try await withThrowingTaskGroup(of: CardData?.self) { group in
             for breed in breeds {
                 let breedName = breed.name ?? ""
+                
                 if let cachedImage = await interactor.getImage(forKey: breedName.lowercased()) {
-                    let cardData = CardData(id: breedName, name: breedName.capitalized, image: cachedImage, isImageLoaded: true)
-                    await imageFetcher.append(breedImage: cardData)
+                    await imageFetcher.append(breedImage: CardData(
+                        id: breedName,
+                        name: breedName.capitalized,
+                        image: cachedImage,
+                        isImageLoaded: true
+                    ))
                     continue
                 }
                 
-                group.addTask {
-                    do {
-                        let request = BreedImageInfoRequest(breed: breedName)
-                        let response = try await self.interactor.getRandomBreedPhoto(request: request)
-                        
-                        if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
-                            let (data, _) = try await URLSession.shared.data(from: url)
-                            if let image = UIImage(data: data) {
-                                return CardData(id: breedName, name: breedName.capitalized, image: image, isImageLoaded: true)
-                            }
-                        }
-                    } catch {
-                        print("Error fetching image for \(breedName): \(error)")
-                    }
-                    return nil
+                group.addTask { [weak self] in
+                    guard let self = self else { return nil }
+                    return await self.fetchBreedImage(for: breedName)
                 }
             }
             
@@ -118,20 +108,35 @@ class DogBreedsViewModel: ObservableObject {
             }
         }
         
-        return await imageFetcher.getAll()
+        return await imageFetcher.getAll(orderedBy: breeds)
+    }
+    
+    private func fetchBreedImage(for breedName: String) async -> CardData? {
+        do {
+            let request = BreedImageInfoRequest(breed: breedName)
+            let response = try await interactor.getRandomBreedPhoto(request: request)
+            
+            guard let imageUrl = response.imageUrl, let url = URL(string: imageUrl) else { return nil }
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            guard let image = UIImage(data: data) else { return nil }
+            return CardData(id: breedName, name: breedName.capitalized, image: image, isImageLoaded: true)
+        } catch {
+            print("Error fetching image for \(breedName): \(error)")
+            return nil
+        }
     }
     
     private func updateBreedImages(_ breedImages: [CardData]) async {
-        let sortedData = breedImages.sorted(by: { $0.name < $1.name })
-        DispatchQueue.main.async {
-            self.cardDataList = sortedData
-            self.breedImageProvider?.updateCardImagesList(self.cardDataList)
+        await MainActor.run {
+            self.cardDataList = breedImages
+            self.breedImageProvider?.updateCardImagesList(cardDataList)
             self.isLoading = false
         }
     }
     
-    func handleError(_ error: Error) async {
-        DispatchQueue.main.async {
+    private func handleError(_ error: Error) async {
+        await MainActor.run {
             self.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
             self.isLoading = false
         }

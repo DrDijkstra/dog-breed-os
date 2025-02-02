@@ -5,14 +5,19 @@
 //  Created by Sanjay Dey on 2025-02-01.
 //
 
+import OneSpanCore
+
 actor ImageFetcher {
-    private var tempFetchedImages: [CardData] = []
+    private var fetchedImages: [String: CardData] = [:]
     
     func append(breedImage: CardData) {
-        tempFetchedImages.append(breedImage)
+        fetchedImages[breedImage.id] = breedImage
     }
     
-    func getAll() -> [CardData] {
-        return tempFetchedImages
+    func getAll(orderedBy breeds: [BreedInfo]) -> [CardData] {
+        return breeds.compactMap { breed in
+            guard let breedName = breed.name else { return nil }
+            return fetchedImages[breedName]
+        }
     }
 }
