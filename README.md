@@ -89,6 +89,8 @@ The **Network Layer** handles all network-related operations, including API requ
 #### **Dependency Injection**:
 - Uses **Swinject** to manage and inject dependencies, ensuring loose coupling and testability.
 
+<img src="./Resources/architecture.jpg" alt="Project Demo">
+
 ---
 
 ### Benefits:
