@@ -1,5 +1,5 @@
 //
-//  OpenSpanCoreService
+//  openSpanCoreInteractor
 //  openspan-core
 //
 //  Created by Sanjay Dey on 2025-01-30.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol OpenSpanCoreService {
+public protocol OpenSpanCoreInteractor {
     func getBreedList() async throws -> [BreedInfo]
     func getRandomBreedPhoto(request: BreedImageInfoRequest) async throws -> BreedImageInfoResponse
     func getImage(forKey key: String) async -> UIImage?
@@ -15,7 +15,7 @@ public protocol OpenSpanCoreService {
     func clearCache() async
 }
 
-class OpenSpanCoreServiceImpl: OpenSpanCoreService {
+class OpenSpanCoreInteractorImpl: OpenSpanCoreInteractor {
     
     let breedService:BreedService
     let imageCacheService:ImageCacheService

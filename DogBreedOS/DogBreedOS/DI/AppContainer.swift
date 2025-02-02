@@ -19,8 +19,8 @@ class AppContainer {
     
     private func registerServices() {
 
-        container.register(OpenSpanCoreService.self) { _ in
-            return OpenSpanCore.shared.openSpanCoreService!
+        container.register(OpenSpanCoreInteractor.self) { _ in
+            return OpenSpanCore.shared.openSpanCoreInteractor!
         }
         .inObjectScope(.container)
         
@@ -35,9 +35,9 @@ class AppContainer {
         .inObjectScope(.transient)
         
         container.register(DogBreedsViewModel.self) { resolver in
-            let openSpanCoreService = resolver.resolve(OpenSpanCoreService.self)!
+            let interactor = resolver.resolve(OpenSpanCoreInteractor.self)!
             let cardImageProvider = resolver.resolve(CardImageProvider.self)!
-            let model = DogBreedsViewModel(openSpanCoreService: openSpanCoreService, cardImageProvider: cardImageProvider)
+            let model = DogBreedsViewModel(interactor: interactor, cardImageProvider: cardImageProvider)
             return model
         }
         .inObjectScope(.transient)

@@ -19,12 +19,12 @@ class DogBreedsViewModel: ObservableObject {
     @Published var errorMessage: String? = nil
     
     // MARK: - Dependencies
-    let openSpanCoreService: OpenSpanCoreService!
+    let interactor: OpenSpanCoreInteractor!
     weak var breedImageProvider: CardImageProvider?
     
     // MARK: - Initializer
-    init(openSpanCoreService: OpenSpanCoreService, cardImageProvider: CardImageProvider?) {
-        self.openSpanCoreService = openSpanCoreService
+    init(interactor: OpenSpanCoreInteractor, cardImageProvider: CardImageProvider?) {
+        self.interactor = interactor
         self.breedImageProvider = cardImageProvider
     }
     
@@ -46,7 +46,7 @@ class DogBreedsViewModel: ObservableObject {
     
     @MainActor func clearCacheAndReload() async {
         cardDataList.removeAll()
-        await openSpanCoreService.clearCache()
+        await interactor.clearCache()
         await fetchAllBreedsAndImages()
     }
     
@@ -66,7 +66,7 @@ class DogBreedsViewModel: ObservableObject {
     }
     
     private func fetchBreeds() async throws -> [BreedInfo] {
-        return try await openSpanCoreService.getBreedList()
+        return try await interactor.getBreedList()
     }
     
     private func updateBreeds(_ breeds: [BreedInfo]) async {
@@ -86,7 +86,7 @@ class DogBreedsViewModel: ObservableObject {
         try await withThrowingTaskGroup(of: CardData?.self) { group in
             for breed in breeds {
                 let breedName = breed.name ?? ""
-                if let cachedImage = await openSpanCoreService.getImage(forKey: breedName.lowercased()) {
+                if let cachedImage = await interactor.getImage(forKey: breedName.lowercased()) {
                     let cardData = CardData(id: breedName, name: breedName.capitalized, image: cachedImage, isImageLoaded: true)
                     await imageFetcher.append(breedImage: cardData)
                     continue
@@ -95,7 +95,7 @@ class DogBreedsViewModel: ObservableObject {
                 group.addTask {
                     do {
                         let request = BreedImageInfoRequest(breed: breedName)
-                        let response = try await self.openSpanCoreService.getRandomBreedPhoto(request: request)
+                        let response = try await self.interactor.getRandomBreedPhoto(request: request)
                         
                         if let imageUrl = response.imageUrl, let url = URL(string: imageUrl) {
                             let (data, _) = try await URLSession.shared.data(from: url)
@@ -112,7 +112,7 @@ class DogBreedsViewModel: ObservableObject {
             
             for try await result in group {
                 if let breedImage = result {
-                    await openSpanCoreService.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
+                    await interactor.cacheImage(breedImage.image, forKey: breedImage.name.lowercased())
                     await imageFetcher.append(breedImage: breedImage)
                 }
             }

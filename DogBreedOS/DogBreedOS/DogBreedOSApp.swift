@@ -19,7 +19,7 @@ struct DogBreedOSApp: App {
            let dict = NSDictionary(contentsOfFile: path) as? [String: Any] {
             // Access values from the dictionary
             if let baseUrl = dict["BASE_URL"] as? String {
-                OpenSpanCore.shared.initializeSDK(baseUrl: baseUrl, appID: "DogBreedOS")
+                OpenSpanCore.shared.initializeSDK(baseUrl: baseUrl)
             }
             else{
                 print("Base url not found. SDK is not initialized.")

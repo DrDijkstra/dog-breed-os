@@ -28,7 +28,7 @@ class AppContainerTests: XCTestCase {
     }
     
     func testResolveOpenSpanCoreService() {
-        let service: OpenSpanCoreService? = appContainer.resolve(OpenSpanCoreService.self)
+        let service: OpenSpanCoreInteractor? = appContainer.resolve(OpenSpanCoreInteractor.self)
         XCTAssertNotNil(service, "OpenSpanCoreService should be resolved successfully.")
     }
     
