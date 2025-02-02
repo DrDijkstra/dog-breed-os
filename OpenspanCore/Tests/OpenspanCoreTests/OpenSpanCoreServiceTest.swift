@@ -18,7 +18,7 @@ final class OpenSpanCoreServiceImplTests: XCTestCase {
         super.setUp()
         mockBreedService = MockBreedService()
         let memoryCache = MemoryCacheRepositoryImpl()
-        let diskCache = DiskCacheRepositoryImpl()
+        let diskCache = UserDefaultsImageCacheRepositoryImpl()
         let imageCacheService = ImageCacheService(memoryCacheRepository: memoryCache, diskCacheRepository: diskCache)
         openSpanCoreService = OpenSpanCoreServiceImpl(breedService: mockBreedService, imageCacheService: imageCacheService)
     }
