@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-extension View {
-    func shine(isShimmering: Binding<Bool>) -> some View {
-        self.overlay(
-            GeometryReader { geometry in
-                Rectangle()
-                    .fill(LinearGradient(
-                        gradient: Gradient(colors: [Color.white.opacity(0.7), Color.white.opacity(0)]),
-                        startPoint: .top, endPoint: .bottom))
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .offset(x: isShimmering.wrappedValue ? geometry.size.width : -geometry.size.width)
-                    .animation(Animation.linear(duration: 1.5).repeatForever(autoreverses: false), value: isShimmering.wrappedValue)
-            }
-        )
+public extension View {
+    /// Adds an animated shimmering effect to any view, typically to show that an operation is in progress.
+    @ViewBuilder func shimmering(
+        active: Bool = true,
+        animation: Animation = Shimmer.defaultAnimation,
+        gradient: Gradient = Shimmer.defaultGradient,
+        bandSize: CGFloat = 0.3,
+        mode: Shimmer.Mode = .mask
+    ) -> some View {
+        if active {
+            modifier(Shimmer(animation: animation, gradient: gradient, bandSize: bandSize, mode: mode))
+        } else {
+            self
+        }
     }
 }

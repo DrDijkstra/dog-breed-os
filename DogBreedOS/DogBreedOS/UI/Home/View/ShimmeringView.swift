@@ -16,7 +16,7 @@ struct ShimmeringView: View {
             .fill(LinearGradient(
                 gradient: Gradient(colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.5), Color.gray.opacity(0.3)]),
                 startPoint: .topLeading, endPoint: .bottomTrailing))
-            .shine(isShimmering: $isShimmering)
+            .shimmering()
             .onAppear {
                 withAnimation(.linear(duration: 1.5).repeatForever(autoreverses: false)) {
                     isShimmering = true
