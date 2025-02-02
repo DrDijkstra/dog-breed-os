@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-protocol MemoryCacheService {
+protocol MemoryCacheRepository {
     func getImage(forKey key: String) async -> UIImage?
     func cacheImage(_ image: UIImage, forKey key: String) async
     func clearCache() async
 }
 
-class MemoryCache: MemoryCacheService {
+class MemoryCacheRepositoryImpl: MemoryCacheRepository {
     
     private let memoryCache = NSCache<NSString, UIImage>()
     

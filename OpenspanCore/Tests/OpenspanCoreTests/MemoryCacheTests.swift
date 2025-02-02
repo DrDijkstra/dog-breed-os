@@ -11,11 +11,11 @@ import XCTest
 import UIKit
 
 final class MemoryCacheTests: XCTestCase {
-    var memoryCache: MemoryCacheService!
+    var memoryCache: MemoryCacheRepository!
 
     override func setUp() {
         super.setUp()
-        memoryCache = MemoryCache()
+        memoryCache = MemoryCacheRepositoryImpl()
     }
 
     override func tearDown() {

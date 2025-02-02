@@ -12,14 +12,14 @@ import UIKit
 
 class ImageCacheServiceTests: XCTestCase {
     var imageCacheService: ImageCacheService!
-    var memoryCacheService: MemoryCacheService!
-    var diskCacheService: DiskCacheService!
+    var memoryCacheService: MemoryCacheRepository!
+    var diskCacheService: DiskCacheRepository!
     
     override func setUp() {
         super.setUp()
-        memoryCacheService = MemoryCache()
-        diskCacheService = DiskCache()
-        imageCacheService = ImageCacheService(memoryCacheService: memoryCacheService, diskCacheService: diskCacheService)
+        memoryCacheService = MemoryCacheRepositoryImpl()
+        diskCacheService = DiskCacheRepositoryImpl()
+        imageCacheService = ImageCacheService(memoryCacheRepository: memoryCacheService, diskCacheRepository: diskCacheService)
     }
     
     override func tearDown() {

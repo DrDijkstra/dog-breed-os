@@ -14,22 +14,22 @@ protocol CacheService {
 }
 
 class ImageCacheService: CacheService {
-    private let memoryCacheService: MemoryCacheService
-    private let diskCacheService: DiskCacheService
+    private let memoryCacheRepository: MemoryCacheRepository
+    private let diskCacheRepository: DiskCacheRepository
     
-    init(memoryCacheService: MemoryCacheService, diskCacheService: DiskCacheService) {
-        self.memoryCacheService = memoryCacheService
-        self.diskCacheService = diskCacheService
+    init(memoryCacheRepository: MemoryCacheRepository, diskCacheRepository: DiskCacheRepository) {
+        self.memoryCacheRepository = memoryCacheRepository
+        self.diskCacheRepository = diskCacheRepository
     }
     
     func getImage(forKey key: String) async -> UIImage? {
-        if let image = await memoryCacheService.getImage(forKey: key) {
+        if let image = await memoryCacheRepository.getImage(forKey: key) {
             return image
         }
         
         // Then check disk cache
-        if let image = await diskCacheService.getImage(forKey: key) {
-            await memoryCacheService.cacheImage(image, forKey: key)
+        if let image = await diskCacheRepository.getImage(forKey: key) {
+            await memoryCacheRepository.cacheImage(image, forKey: key)
             return image
         }
         
@@ -37,12 +37,12 @@ class ImageCacheService: CacheService {
     }
     
     func cacheImage(_ image: UIImage, forKey key: String) async {
-        await memoryCacheService.cacheImage(image, forKey: key)
-        await diskCacheService.cacheImage(image, forKey: key)
+        await memoryCacheRepository.cacheImage(image, forKey: key)
+        await diskCacheRepository.cacheImage(image, forKey: key)
     }
     
     func clearCache() async {
-        await memoryCacheService.clearCache()
-        await diskCacheService.clearCache()
+        await memoryCacheRepository.clearCache()
+        await diskCacheRepository.clearCache()
     }
 }

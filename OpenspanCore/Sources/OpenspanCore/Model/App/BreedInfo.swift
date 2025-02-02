@@ -16,6 +16,14 @@ public class BreedInfo: Equatable {
     }
     
     public static func == (lhs: BreedInfo, rhs: BreedInfo) -> Bool {
-        return lhs.name == rhs.name && lhs.subBreeds == rhs.subBreeds
+        guard lhs.name == rhs.name else {
+            return false
+        }
+        
+        if let lhsSubBreeds = lhs.subBreeds, let rhsSubBreeds = rhs.subBreeds {
+            return lhsSubBreeds == rhsSubBreeds
+        } else {
+            return lhs.subBreeds == nil && rhs.subBreeds == nil
+        }
     }
 }

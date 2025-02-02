@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-protocol DiskCacheService {
+protocol DiskCacheRepository {
     func getImage(forKey key: String) async -> UIImage?
     func cacheImage(_ image: UIImage, forKey key: String) async
     func clearCache() async
 }
 
-class DiskCache: DiskCacheService {
+class DiskCacheRepositoryImpl: DiskCacheRepository {
     private let userDefaults = UserDefaults.standard
     private let concurrentQueue = DispatchQueue(label: "com.diskcache.concurrentQueue", attributes: .concurrent)
     
