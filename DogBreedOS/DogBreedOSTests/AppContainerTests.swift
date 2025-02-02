@@ -9,7 +9,7 @@
 import XCTest
 import Swinject
 import OpenspanCore
-@testable import DogBreedOS // Replace with your app's module name
+@testable import DogBreedOS
 
 class AppContainerTests: XCTestCase {
     
@@ -17,15 +17,15 @@ class AppContainerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Initialize the container
         appContainer = AppContainer.shared
     }
     
     override func tearDown() {
-        // Cleanup
         appContainer = nil
         super.tearDown()
     }
+    
+    // MARK: - Tests
     
     func testResolveOpenSpanCoreService() {
         let service: OpenSpanCoreInteractor? = appContainer.resolve(OpenSpanCoreInteractor.self)
@@ -35,7 +35,6 @@ class AppContainerTests: XCTestCase {
     func testResolveWaterfallGridViewModel() {
         let viewModel: WaterfallGridViewModel? = appContainer.resolve(WaterfallGridViewModel.self)
         XCTAssertNotNil(viewModel, "WaterfallGridViewModel should be resolved successfully.")
-        //XCTAssertEqual(viewModel?.numberOfColumns, 2, "WaterfallGridViewModel should have 2 columns.")
     }
     
     func testResolveCardImageProvider() {
@@ -48,13 +47,9 @@ class AppContainerTests: XCTestCase {
         XCTAssertNotNil(viewModel, "DogBreedsViewModel should be resolved successfully.")
     }
     
-    // Optionally, test any additional logic in the resolve method, e.g., checking if all dependencies are injected correctly
     func testResolveDependenciesInDogBreedsViewModel() {
         let viewModel: DogBreedsViewModel? = appContainer.resolve(DogBreedsViewModel.self)
-        let openSpanCoreService = viewModel?.openSpanCoreService
-        let cardImageProvider = viewModel?.breedImageProvider
-        
-        XCTAssertNotNil(openSpanCoreService, "OpenSpanCoreService should be injected into DogBreedsViewModel.")
-        XCTAssertNotNil(cardImageProvider, "CardImageProvider should be injected into DogBreedsViewModel.")
+        XCTAssertNotNil(viewModel?.interactor, "OpenSpanCoreInteractor should be injected into DogBreedsViewModel.")
+        XCTAssertNotNil(viewModel?.breedImageProvider, "CardImageProvider should be injected into DogBreedsViewModel.")
     }
 }

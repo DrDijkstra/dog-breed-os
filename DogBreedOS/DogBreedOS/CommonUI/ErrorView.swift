@@ -17,6 +17,7 @@ struct ErrorView: View {
                 .scaledToFit()
                 .frame(width: 50, height: 50)
                 .foregroundColor(.red)
+            
             Text(message)
                 .font(.headline)
                 .foregroundColor(.gray)
@@ -26,7 +27,7 @@ struct ErrorView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     ErrorView(message: "Failed to load images or no connection.")
 }
-

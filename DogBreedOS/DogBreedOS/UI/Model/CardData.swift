@@ -5,7 +5,6 @@
 //  Created by Sanjay Dey on 2025-01-30.
 //
 
-
 import UIKit
 
 class CardData: Identifiable, Hashable {
@@ -25,12 +24,14 @@ class CardData: Identifiable, Hashable {
         self.isImageLoaded = isImageLoaded
     }
     
-    // Conform to Hashable using the `id` property
+    // MARK: - Hashable Conformance
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
-    // Required for Equatable conformance
+    // MARK: - Equatable Conformance
+    
     static func == (lhs: CardData, rhs: CardData) -> Bool {
         lhs.id == rhs.id && lhs.image == rhs.image
     }
