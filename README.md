@@ -22,7 +22,6 @@ Welcome to the **Dog Breed** project! This project is designed to display images
 10. [Dark Mode and Light Mode Support](#dark-mode-and-light-mode-support)
 11. [Dependencies](#dependencies)
 12. [Contributing](#contributing)
-13. [License](#license)
 
 ---
 
@@ -205,10 +204,5 @@ Contributions are welcome! Please follow these steps:
 4. Submit a pull request with a detailed description of your changes.
 
 ---
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
---- 
 
 Enjoy exploring the world of dog breeds with this app! 🐶
