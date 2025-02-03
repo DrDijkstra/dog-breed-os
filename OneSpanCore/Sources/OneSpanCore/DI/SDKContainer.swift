@@ -30,10 +30,12 @@ class SDKContainer {
             ApiInterceptor()
         }
         .inObjectScope(.container)
+        
         container.register(ApiService.self) { _ in
             ApiServiceImpl(baseUrl: self.baseUrl, requestInterceptor: self.resolve(ApiInterceptor.self))
         }
         .inObjectScope(.container)
+        
         container.register(BreedService.self) { _ in
             BreedServiceImpl(apiService:  self.resolve(ApiService.self))
         }
@@ -46,6 +48,7 @@ class SDKContainer {
             DiskImageCacheRepositoryImpl()
         }
         .inObjectScope(.container)
+        
         container.register(ImageCacheService.self) { _ in
             ImageCacheService(memoryCacheRepository: self.resolve(MemoryCacheRepository.self), diskCacheRepository: self.resolve(DiskImageCacheRepository.self))
         }
