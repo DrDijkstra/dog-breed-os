@@ -15,9 +15,9 @@ protocol CacheService {
 
 class ImageCacheService: CacheService {
     private let memoryCacheRepository: MemoryCacheRepository
-    private let diskCacheRepository: UserDefaultsImageCacheRepository
+    private let diskCacheRepository: DiskImageCacheRepository
     
-    init(memoryCacheRepository: MemoryCacheRepository, diskCacheRepository: UserDefaultsImageCacheRepository) {
+    init(memoryCacheRepository: MemoryCacheRepository, diskCacheRepository: DiskImageCacheRepository) {
         self.memoryCacheRepository = memoryCacheRepository
         self.diskCacheRepository = diskCacheRepository
     }

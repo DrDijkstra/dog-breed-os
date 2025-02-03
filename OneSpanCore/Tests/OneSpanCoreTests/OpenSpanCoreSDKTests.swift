@@ -12,19 +12,19 @@ import Swinject
 
 final class OpenSpanCoreTests: XCTestCase {
     
-    var openSpanCore: OneSpanCore!
+    var oneSpanCore: OneSpanCore!
     
     override func setUp() {
         super.setUp()
-        openSpanCore = OneSpanCore.shared
+        oneSpanCore = OneSpanCore.shared
         
         // Initialize the SDK with a valid baseUrl (e.g., a test API endpoint)
         let testBaseUrl = "https://dog.ceo/api/"
-        openSpanCore.initializeSDK(baseUrl: testBaseUrl)
+        oneSpanCore.initializeSDK(baseUrl: testBaseUrl)
     }
     
     override func tearDown() {
-        openSpanCore.openSpanCoreInteractor = nil
+        oneSpanCore.oneSpanCoreInteractor = nil
         
         // Reset the SDKContainer to its original state
         SDKContainer.shared.container.removeAll()
@@ -38,17 +38,17 @@ final class OpenSpanCoreTests: XCTestCase {
         let baseUrl = "https://api.example.com"
         
         // Act
-        openSpanCore.initializeSDK(baseUrl: baseUrl)
+        oneSpanCore.initializeSDK(baseUrl: baseUrl)
         
         // Assert
-        XCTAssertNotNil(openSpanCore.openSpanCoreInteractor, "Expected openSpanCoreInteractor to be initialized")
+        XCTAssertNotNil(oneSpanCore.oneSpanCoreInteractor, "Expected openSpanCoreInteractor to be initialized")
     }
     
     // Test getBreedList() through OpenSpanCore
     func testGetBreedList() async {
         do {
             // Act
-            let breeds = try await openSpanCore.openSpanCoreInteractor?.getBreedList()
+            let breeds = try await oneSpanCore.oneSpanCoreInteractor?.getBreedList()
             
             // Assert
             XCTAssertNotNil(breeds, "Expected breeds to be fetched")
@@ -65,7 +65,7 @@ final class OpenSpanCoreTests: XCTestCase {
         
         do {
             // Act
-            let response = try await openSpanCore.openSpanCoreInteractor?.getRandomBreedPhoto(request: request)
+            let response = try await oneSpanCore.oneSpanCoreInteractor?.getRandomBreedPhoto(request: request)
             
             // Assert
             XCTAssertNotNil(response, "Expected response to be fetched")

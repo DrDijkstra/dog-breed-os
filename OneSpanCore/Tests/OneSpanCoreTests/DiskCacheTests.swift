@@ -11,12 +11,12 @@ import XCTest
 import UIKit
 
 final class DiskCacheTests: XCTestCase {
-    var diskCache: UserDefaultsImageCacheRepository!
+    var diskCache: DiskImageCacheRepository!
     let testCacheDirectory = "TestDiskCache"
 
     override func setUp() {
         super.setUp()
-        diskCache = UserDefaultsImageCacheRepositoryImpl() // Assuming no need for `cacheDirectoryString` parameter anymore.
+        diskCache = DiskImageCacheRepositoryImpl() 
     }
 
     override func tearDown() {
