@@ -40,10 +40,12 @@ class SDKContainer {
             BreedServiceImpl(apiService:  self.resolve(ApiService.self))
         }
         .inObjectScope(.container)
+        
         container.register(MemoryCacheRepository.self) { _ in
             MemoryCacheRepositoryImpl()
         }
         .inObjectScope(.container)
+        
         container.register(DiskImageCacheRepository.self) { _ in
             DiskImageCacheRepositoryImpl()
         }
