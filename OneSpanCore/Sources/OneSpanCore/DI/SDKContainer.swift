@@ -42,10 +42,6 @@ class SDKContainer {
             MemoryCacheRepositoryImpl()
         }
         .inObjectScope(.container)
-        container.register(UserDefaultsImageCacheRepository.self) { _ in
-            UserDefaultsImageCacheRepositoryImpl()
-        }
-        .inObjectScope(.container)
         container.register(DiskImageCacheRepository.self) { _ in
             DiskImageCacheRepositoryImpl()
         }
