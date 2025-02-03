@@ -18,8 +18,10 @@ class WaterfallGridViewModel: ObservableObject, CardImageProvider {
     // MARK: - Published Properties
     @Published var columns: [[CardData]] = []
     
+    // MARK: - Internal Properties
+    let numberOfColumns: Int
+    
     // MARK: - Private Properties
-    private let numberOfColumns: Int
     private var cancellables = Set<AnyCancellable>()
     
     private var columnSpacing: CGFloat = 48

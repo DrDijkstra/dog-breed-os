@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "GettyImages-598175960-cute-dog-headshot.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "GettyImages-598175960-cute-dog-headshot 1.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "GettyImages-598175960-cute-dog-headshot 2.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
