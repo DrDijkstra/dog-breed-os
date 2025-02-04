@@ -116,10 +116,12 @@ class DogBreedsViewModel: ObservableObject {
             let request = BreedImageInfoRequest(breed: breedName)
             let response = try await interactor.getRandomBreedPhoto(request: request)
             
-            guard let imageUrl = response.imageUrl, let url = URL(string: imageUrl) else { return nil }
-            let (data, _) = try await URLSession.shared.data(from: url)
+            guard let imageUrl = response.imageUrl else { return nil }
+            guard let image = await interactor.downloadImage(url: imageUrl) else {
+                print("Image is not found")
+                return nil
+            }
             
-            guard let image = UIImage(data: data) else { return nil }
             return CardData(id: breedName, name: breedName.capitalized, image: image, isImageLoaded: true)
         } catch {
             print("Error fetching image for \(breedName): \(error)")
