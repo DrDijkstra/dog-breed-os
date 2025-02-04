@@ -12,6 +12,7 @@ import Alamofire
 protocol ApiService {
     func getBreedList() async throws -> ApiBreedData
     func getRandomBreedPhoto(request: ApiRandomBreedImageRequest) async throws -> ApiRandomBreedImageResponse
+    func downloadFile(url: URL) async throws -> Data
 }
 
 class ApiServiceImpl: ApiService {
@@ -38,6 +39,10 @@ class ApiServiceImpl: ApiService {
     func getRandomBreedPhoto(request: ApiRandomBreedImageRequest) async throws -> ApiRandomBreedImageResponse {
         return try await executeRequest(RequestRouter.randomPhoto(request: request))
     }
+    
+    func downloadFile(url: URL) async throws -> Data {
+        return try await downloadFile(from: url.absoluteString)
+    }
 
     private func executeRequest<T: Decodable>(_ urlRequest: URLRequestConvertible) async throws -> T {
         let dataTask = session.request(urlRequest).serializingDecodable(T.self)
@@ -54,6 +59,22 @@ class ApiServiceImpl: ApiService {
         }
         
         return response.value!
+    }
+    
+    func downloadFile(from url: String) async throws -> Data {
+        let dataTask = session.request(url).serializingData()
+        let response = await dataTask.response
+        
+        if let error = response.error {
+            print("Download Failed: \(error)")
+            throw error
+        }
+        
+        guard let data = response.value else {
+            throw URLError(.badServerResponse)
+        }
+        
+        return data
     }
 
     private func printPrettyJSON(from data: Data, isSuccess: Bool) {

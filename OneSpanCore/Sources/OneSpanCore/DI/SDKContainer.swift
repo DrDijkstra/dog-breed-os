@@ -55,9 +55,14 @@ class SDKContainer {
             ImageCacheService(memoryCacheRepository: self.resolve(MemoryCacheRepository.self), diskCacheRepository: self.resolve(DiskImageCacheRepository.self))
         }
         .inObjectScope(.container)
+        
+        container.register(DownloadService.self) { _ in
+            DownloadServiceImpl(apiService: self.resolve(ApiService.self))
+        }
+        .inObjectScope(.container)
 
         container.register(OneSpanCoreInteractor.self) { _ in
-            OneSpanCoreInteractorImpl(breedService: self.resolve(BreedService.self), imageCacheService: self.resolve(ImageCacheService.self))
+            OneSpanCoreInteractorImpl(breedService: self.resolve(BreedService.self), imageCacheService: self.resolve(ImageCacheService.self), downloadService: self.resolve(DownloadService.self))
         }
         .inObjectScope(.container)
         
